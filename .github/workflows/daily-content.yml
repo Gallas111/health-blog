@@ -52,6 +52,8 @@ jobs:
           fi
 
       - name: Notify Telegram (Start)
+        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}
+        continue-on-error: true
         run: |
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
           -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
@@ -142,7 +144,8 @@ jobs:
         run: curl "https://www.google.com/ping?sitemap=https://www.wellnesstodays.com/sitemap.xml"
 
       - name: Notify Telegram (Success)
-        if: success()
+        if: ${{ success() && secrets.TELEGRAM_BOT_TOKEN != '' }}
+        continue-on-error: true
         run: |
           POST_URL="${{ steps.generate.outputs.POST_URL }}"
           if [ -z "$POST_URL" ]; then
@@ -154,7 +157,8 @@ jobs:
           -d text="✅ [오늘도 건강] Health article published! Check it out: ${POST_URL}"
 
       - name: Notify Telegram (Failure)
-        if: failure()
+        if: ${{ failure() && secrets.TELEGRAM_BOT_TOKEN != '' }}
+        continue-on-error: true
         run: |
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
           -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
