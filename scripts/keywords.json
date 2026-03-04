@@ -58,5 +58,51 @@
     "slug": "foods-good-for-hard-stool",
     "category": "home-remedies",
     "createdAt": "2026-03-04T11:01:44.340Z"
+  },
+  {
+    "mainKeyword": "WHO 건강 정의 및 건강의 3요소",
+    "slug": "who-health-definition-three-elements",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T11:19:51.011Z",
+    "source": "autocomplete|paa",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "정신 건강이란 무엇이며 마음 건강과의 관계",
+    "slug": "what-is-mental-health-and-mind-health",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T11:19:51.011Z",
+    "source": "autocomplete",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "사회적 건강이란? WHO 건강 정의의 중요 요소",
+    "slug": "what-is-social-health-who-definition",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T11:19:51.011Z",
+    "source": "autocomplete",
+    "estimatedVolume": "low",
+    "competition": "low",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "건강 보험이란? 환급금 및 정산 쉽게 이해하기",
+    "slug": "what-is-health-insurance-refund-settlement",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T11:19:51.011Z",
+    "source": "autocomplete",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "긴장성 두통 원인",
+    "slug": "tension-headache-causes",
+    "category": "symptoms",
+    "createdAt": "2026-03-04T11:22:59.915Z"
   }
 ]
