@@ -22,8 +22,8 @@ export default function FeaturedPosts() {
             <div className="container mx-auto px-4 max-w-6xl">
                 <div className="flex items-end justify-between mb-10">
                     <div>
-                        <div className="flex items-center gap-2 text-blue-600 font-bold mb-2">
-                            <Star size={20} className="fill-blue-600" />
+                        <div className="flex items-center gap-2 text-green-600 font-bold mb-2">
+                            <Star size={20} className="fill-green-600" />
                             <span className="uppercase tracking-wider text-sm">Must Read</span>
                         </div>
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
@@ -32,7 +32,7 @@ export default function FeaturedPosts() {
                     </div>
                     <Link
                         href="/blog"
-                        className="hidden md:flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        className="hidden md:flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
                     >
                         전체 보기 <ArrowRight size={18} />
                     </Link>

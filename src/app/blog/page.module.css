@@ -1,25 +1,22 @@
 .header {
-    padding: 4rem 0 2rem;
+    padding: 3rem 0 1.5rem;
     text-align: center;
 }
 
 .title {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #16a34a;
 }
 
 .subtitle {
-    color: var(--secondary-foreground);
-    font-size: 1.1rem;
+    color: #6b7280;
+    font-size: 1rem;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    padding-bottom: 4rem;
+    gap: 1.25rem;
+    padding-bottom: 3rem;
 }

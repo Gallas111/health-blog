@@ -22,7 +22,8 @@ export default function Header({ posts = [] }: HeaderProps) {
             <header className={styles.header}>
                 <div className={`container ${styles.container}`}>
                     <Link href="/" className={styles.logo}>
-                        <span className={styles.logoText}>오늘도</span>건강
+                        <span>💊</span>
+                        <span className={styles.logoText}>오늘도건강</span>
                     </Link>
 
                     <nav className={styles.nav}>

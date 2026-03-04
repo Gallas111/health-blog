@@ -49,7 +49,7 @@
     color: var(--primary);
     font-weight: 600;
     border-left-color: var(--primary);
-    background: linear-gradient(to right, rgba(99, 102, 241, 0.05), transparent);
+    background: linear-gradient(to right, rgba(22, 163, 74, 0.05), transparent);
 }
 
 .subItem .link {

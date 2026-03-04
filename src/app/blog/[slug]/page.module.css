@@ -269,9 +269,9 @@
     align-items: center;
     white-space: nowrap;
     padding: 0.4rem 1rem;
-    border: 2px solid #6366f1;
+    border: 2px solid #16a34a;
     border-radius: 999px;
-    color: #6366f1;
+    color: #16a34a;
     font-weight: 600;
     font-size: 0.85rem;
     text-decoration: none;
@@ -280,7 +280,7 @@
 }
 
 .relatedViewAll:hover {
-    background: #6366f1;
+    background: #16a34a;
     color: #fff;
 }
 

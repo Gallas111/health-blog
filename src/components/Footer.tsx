@@ -9,7 +9,7 @@ export default function Footer() {
                     {/* Brand Column */}
                     <div className={styles.brand}>
                         <Link href="/" className={styles.logo}>
-                            <span className={styles.logoAccent}>오늘도</span>건강
+                            💊 <span className={styles.logoAccent}>오늘도건강</span>
                         </Link>
                         <p className={styles.brandDesc}>
                             증상별 건강정보, 영양제 효능, 민간요법, 생활건강 상식까지.

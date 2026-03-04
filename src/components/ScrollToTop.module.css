@@ -2,18 +2,18 @@
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    background: var(--primary);
+    background: #16a34a;
     color: white;
-    width: 3rem;
-    height: 3rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+    transition: all 0.2s ease;
     z-index: 50;
     opacity: 0;
     transform: translateY(20px);
@@ -21,9 +21,9 @@
 }
 
 .button:hover {
-    background: var(--primary-hover);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(79, 70, 229, 0.4);
+    background: #15803d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
 }
 
 @keyframes fadeInUp {
