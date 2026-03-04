@@ -57,7 +57,7 @@ jobs:
           if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d text="🚀 [오늘도 건강] Starting automated health article generation..."
+            -d text="🚀 [오늘도 건강] 새 건강 글 작성을 시작합니다..."
           else
             echo "Telegram not configured, skipping."
           fi
@@ -154,9 +154,16 @@ jobs:
         continue-on-error: true
         run: |
           if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
+            POST_URL="${{ steps.generate.outputs.POST_URL }}"
+            if [ -n "$POST_URL" ]; then
+              MSG="✅ [오늘도 건강] 새 글이 발행되었습니다!
+📄 ${POST_URL}"
+            else
+              MSG="✅ [오늘도 건강] 작업 완료!"
+            fi
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d text="✅ [오늘도 건강] Health article published!"
+            -d text="$MSG"
           fi
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -169,7 +176,7 @@ jobs:
           if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d text="❌ [오늘도 건강] Automation failed. Check GitHub Actions logs."
+            -d text="❌ [오늘도 건강] 자동화 실패! GitHub Actions 로그를 확인하세요."
           fi
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
