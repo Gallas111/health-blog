@@ -1,0 +1,57 @@
+.callout {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+}
+
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.info {
+    background-color: #f0f7ff;
+    border-left-color: #3b82f6;
+    color: #1e3a8a;
+}
+
+.tip {
+    background-color: #f0fdf4;
+    border-left-color: #22c55e;
+    color: #14532d;
+}
+
+.warning {
+    background-color: #fffbeb;
+    border-left-color: #f59e0b;
+    color: #78350f;
+}
+
+.success {
+    background-color: #fdf2f8;
+    border-left-color: #ec4899;
+    color: #701a75;
+}
+
+.title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.content {
+    color: inherit;
+}

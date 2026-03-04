@@ -1,0 +1,197 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #EEF2FF;
+    color: #4F46E5;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #111827;
+}
+
+.titleHighlight {
+    color: #4F46E5;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: #4B5563;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.section {
+    margin-bottom: 5rem;
+}
+
+.sectionTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #111827;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.sectionTitle::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 100%;
+    background-color: #4F46E5;
+    border-radius: 2px;
+}
+
+.content p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 1.5rem;
+}
+
+.storyList {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.storyItem {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.year {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #4F46E5;
+    min-width: 80px;
+}
+
+.storyContent h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #111827;
+}
+
+.storyContent p {
+    font-size: 1rem;
+    color: #6B7280;
+    margin: 0;
+}
+
+.values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.valueCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s;
+}
+
+.valueCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-color: #4F46E5;
+}
+
+.valueIcon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.valueTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #111827;
+}
+
+.valueDesc {
+    color: #6B7280;
+    line-height: 1.6;
+}
+
+.cta {
+    background-color: #F8FAFC;
+    border-radius: 1.5rem;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.ctaTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #111827;
+}
+
+.ctaDesc {
+    font-size: 1.125rem;
+    color: #6B7280;
+    margin-bottom: 2rem;
+}
+
+.emailLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #4F46E5;
+    color: white;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.emailLink:hover {
+    background-color: #4338CA;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .storyItem {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .year {
+        font-size: 1.25rem;
+        color: #4F46E5;
+    }
+}

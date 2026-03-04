@@ -1,0 +1,143 @@
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 4rem 0 2rem;
+    margin-top: auto;
+    background: #0f172a;
+    color: #94a3b8;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Brand Column */
+.brand {
+    max-width: 320px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.logoAccent {
+    color: var(--primary);
+}
+
+.brandDesc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+}
+
+.social {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+    transition: all 0.2s;
+}
+
+.socialLink:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Link Columns */
+.columnTitle {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #e2e8f0;
+    margin-bottom: 1.25rem;
+}
+
+.linkList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.linkItem a {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.linkItem a:hover {
+    color: #ffffff;
+}
+
+/* Bottom Bar */
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.8rem;
+}
+
+.copy {
+    color: #64748b;
+}
+
+.bottomLinks {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.bottomLinks a {
+    color: #64748b;
+    transition: color 0.2s;
+    font-size: 0.85rem;
+}
+
+.bottomLinks a:hover {
+    color: #94a3b8;
+    text-decoration: underline;
+}
+
+.divider {
+    color: #334155;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 3rem 0 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .bottom {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+}

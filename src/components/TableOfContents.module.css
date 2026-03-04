@@ -1,0 +1,137 @@
+.toc {
+    position: sticky;
+    top: 6rem;
+    /* Header height + buffer */
+    padding: 1rem 0;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+}
+
+.title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid var(--border);
+}
+
+.item {
+    margin: 0;
+}
+
+.link {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    /* Slate 500 */
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    /* Overlap border */
+}
+
+.link:hover {
+    color: var(--primary);
+}
+
+.active {
+    color: var(--primary);
+    font-weight: 600;
+    border-left-color: var(--primary);
+    background: linear-gradient(to right, rgba(99, 102, 241, 0.05), transparent);
+}
+
+.subItem .link {
+    padding-left: 2rem;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+    .toc {
+        display: none;
+    }
+}
+
+/* Mobile TOC Styles */
+.mobileToc {
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--background);
+    overflow: hidden;
+    display: none;
+    /* Hidden by default */
+}
+
+@media (max-width: 1024px) {
+    .mobileToc {
+        display: block;
+        /* Show on mobile/tablet */
+    }
+}
+
+.mobileSummary {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    /* Remove default triangle */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--background-secondary, #f9fafb);
+}
+
+.mobileSummary::-webkit-details-marker {
+    display: none;
+}
+
+.mobileIcon {
+    transition: transform 0.2s;
+}
+
+details[open] .mobileIcon {
+    transform: rotate(180deg);
+}
+
+.mobileList {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border-top: 1px solid var(--border);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.mobileItem {
+    border-bottom: 1px solid var(--border);
+}
+
+.mobileItem:last-child {
+    border-bottom: none;
+}
+
+.mobileLink {
+    display: block;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.mobileSubItem .mobileLink {
+    padding-left: 2rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+}

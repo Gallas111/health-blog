@@ -1,0 +1,161 @@
+name: Daily Health Article Generation
+
+on:
+  schedule:
+    # KST 08:30 (UTC 23:30) - Morning Commute
+    - cron: '30 23 * * *'
+    # KST 11:30 (UTC 02:30) - Pre-Lunch
+    - cron: '30 2 * * *'
+    # KST 14:30 (UTC 05:30) - Mid-Afternoon
+    - cron: '30 5 * * *'
+    # KST 17:30 (UTC 08:30) - Pre-Evening
+    - cron: '30 8 * * *'
+    # KST 21:30 (UTC 12:30) - Night
+    - cron: '30 12 * * *'
+  workflow_dispatch: # Allow manual trigger for testing
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Debug Environment
+        run: |
+          echo "Node Version:"
+          node -v
+          echo "NPM Version:"
+          npm -v
+          echo "Installed Packages:"
+          npm list --depth=0 || true
+
+      - name: Ensure keywords.json exists
+        run: |
+          if [ ! -f scripts/keywords.json ]; then
+            echo "scripts/keywords.json not found. Creating empty array..."
+            echo "[]" > scripts/keywords.json
+          else
+            echo "scripts/keywords.json exists. Skipping creation."
+          fi
+
+      - name: Notify Telegram (Start)
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="🚀 [오늘도 건강] Starting automated health article generation..."
+
+      - name: Trend Hunting (Bot)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SEARCHAPI_API_KEY: ${{ secrets.SEARCHAPI_API_KEY }}
+        run: |
+          echo "🏹 Running Health Trend Hunter Bot to find fresh content topics..."
+          npx tsx scripts/trend-hunter.ts
+
+      - name: Generate Health Article
+        id: generate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SEARCHAPI_API_KEY: ${{ secrets.SEARCHAPI_API_KEY }}
+          HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "Starting health blog generation..."
+          npm run blog:generate
+          echo "Generation finished."
+
+      - name: Content Refinement (Bot)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "✨ Running Health Content Refiner Bot to humanize text and add TL;DR..."
+          npx tsx scripts/content-refiner.ts
+
+      - name: Validate and Fix Images (Bot)
+        env:
+          HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "🤖 Running Image Bot to fix placeholders and missing assets..."
+          npx tsx scripts/image-bot.ts
+
+      - name: Internal Linking (Bot)
+        run: |
+          echo "🔗 Running Internal Linker Bot to cross-link related posts..."
+          npx tsx scripts/internal-linker.ts
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Fix Korean filename encoding in git output
+          git config --global core.quotePath false
+          git add .
+          git commit -m "Auto: Generated new health article" || echo "No changes to commit"
+
+          # Pull with rebase, auto-resolve conflicts if any
+          if ! git pull --rebase origin main; then
+            echo "⚠️ Rebase conflict detected, auto-resolving..."
+
+            # Use NUL-delimited output to handle Korean filenames safely
+            git diff --name-only --diff-filter=U -z | while IFS= read -r -d '' file; do
+              echo "  Resolving: $file"
+              if [ "$file" = "scripts/keywords.json" ]; then
+                # Merge both keyword arrays (stage 2=upstream, stage 3=ours during rebase)
+                git show :2:scripts/keywords.json > /tmp/kw_upstream.json 2>/dev/null || echo "[]" > /tmp/kw_upstream.json
+                git show :3:scripts/keywords.json > /tmp/kw_ours.json 2>/dev/null || echo "[]" > /tmp/kw_ours.json
+                node -e "
+                  const fs = require('fs');
+                  const a = JSON.parse(fs.readFileSync('/tmp/kw_upstream.json','utf8'));
+                  const b = JSON.parse(fs.readFileSync('/tmp/kw_ours.json','utf8'));
+                  const merged = [...new Set([...a, ...b])];
+                  fs.writeFileSync('scripts/keywords.json', JSON.stringify(merged, null, 2) + '\n');
+                "
+              else
+                # For existing content files: keep upstream (ours) to preserve FAQ/SEO data
+                # For new files: keep theirs (GHA-generated content)
+                # During rebase: ours=upstream(origin/main), theirs=commit being replayed
+                git checkout --ours "$file" 2>/dev/null || git checkout --theirs "$file"
+              fi
+              git add "$file"
+            done
+
+            GIT_EDITOR=true git rebase --continue
+          fi
+
+          git push origin main
+
+      - name: Ping Google Sitemap
+        run: curl "https://www.google.com/ping?sitemap=https://www.wellnesstodays.com/sitemap.xml"
+
+      - name: Notify Telegram (Success)
+        if: success()
+        run: |
+          POST_URL="${{ steps.generate.outputs.POST_URL }}"
+          if [ -z "$POST_URL" ]; then
+            POST_URL="https://www.wellnesstodays.com"
+          fi
+
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="✅ [오늘도 건강] Health article published! Check it out: ${POST_URL}"
+
+      - name: Notify Telegram (Failure)
+        if: failure()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="❌ [오늘도 건강] Automation failed. Please check GitHub Actions logs."
