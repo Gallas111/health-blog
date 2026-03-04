@@ -50,7 +50,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             type: "article",
             publishedTime: post.frontmatter.date,
             authors: ["오늘도 건강"],
-            images: [{ url: post.frontmatter.image || "", alt: post.frontmatter.title }],
+            siteName: "오늘도 건강",
+            locale: "ko_KR",
+            images: [{ url: post.frontmatter.image || "/og-image.png", width: 1200, height: 630, alt: post.frontmatter.title }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: post.frontmatter.title,
+            description: post.frontmatter.description,
+            images: [post.frontmatter.image || "/og-image.png"],
         },
         alternates: {
             canonical: `https://www.wellnesstodays.com/blog/${post.slug}`,

@@ -23,11 +23,20 @@ export const metadata: Metadata = {
     siteName: "오늘도 건강",
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "오늘도 건강 — 증상·영양제·민간요법·생활건강 정보",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "오늘도 건강 — 증상·영양제·민간요법·생활건강 정보",
     description: "증상별 원인과 대처법, 영양제 효능, 민간요법, 생활건강 상식까지 한 곳에서.",
+    images: ["/og-image.png"],
   },
   keywords: ["건강 정보", "증상 원인", "영양제 효능", "민간요법", "좋은 음식", "생활건강", "약국 정보", "비타민D", "감기 빨리 낫는 법", "오늘도 건강"],
   alternates: {
@@ -53,11 +62,18 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
       { url: "/logo.png", type: "image/png", sizes: "512x512" },
     ],
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/manifest.json",
+  other: {
+    "theme-color": "#16a34a",
   },
 };
 

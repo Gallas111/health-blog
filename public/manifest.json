@@ -1,0 +1,21 @@
+{
+  "name": "오늘도 건강",
+  "short_name": "오늘도건강",
+  "description": "증상·영양제·민간요법·생활건강 정보",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
