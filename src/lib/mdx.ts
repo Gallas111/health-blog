@@ -118,7 +118,7 @@ export function getHeadings(content: string) {
     let match;
 
     while ((match = regex.exec(content)) !== null) {
-        const text = match[2].trim();
+        const text = match[2].trim().replace(/\*\*/g, '');
         // Generate ID compatible with rehype-slug (kebab-case)
         const id = text
             .toLowerCase()
