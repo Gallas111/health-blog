@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "mainKeyword": "갑작스런 어지럼증 원인",
+    "slug": "causes-of-sudden-dizziness",
+    "category": "symptoms",
+    "createdAt": "2026-03-04T08:28:02.703Z"
+  },
+  {
+    "mainKeyword": "변비에 좋은 음식 나쁜 음식",
+    "slug": "good-and-bad-foods-for-constipation",
+    "category": "home-remedies",
+    "createdAt": "2026-03-04T08:31:48.365Z"
+  },
+  {
+    "mainKeyword": "올바른 약 복용법",
+    "slug": "proper-medicine-usage",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-04T08:34:55.149Z"
+  },
+  {
+    "mainKeyword": "두통 부위 별 원인",
+    "slug": "causes-of-headache-by-location",
+    "category": "symptoms",
+    "createdAt": "2026-03-04T08:38:44.872Z"
+  },
+  {
+    "mainKeyword": "같이 복용하면 안 되는 약",
+    "slug": "medications-not-to-mix",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-04T08:42:15.729Z"
+  }
+]
