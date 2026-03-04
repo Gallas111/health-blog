@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // TODO: 새 도메인용 Google/Naver verification 추가
+    google: "Lw3vEwx7HEpspbR9ngCB1weCGxbV-HivcnUNDnM7n00",
     other: {
       "google-adsense-account": "ca-pub-1022869499967960",
     },
