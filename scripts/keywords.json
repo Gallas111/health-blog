@@ -104,5 +104,51 @@
     "slug": "tension-headache-causes",
     "category": "symptoms",
     "createdAt": "2026-03-04T11:22:59.915Z"
+  },
+  {
+    "mainKeyword": "날씨가 건강에 미치는 영향",
+    "slug": "weather-impact-on-health",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T14:01:18.376Z",
+    "source": "trending|autocomplete|paa",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "폭염 건강관리 방법",
+    "slug": "heatwave-health-management-tips",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T14:01:18.376Z",
+    "source": "paa",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "극한 온도 인체 영향",
+    "slug": "extreme-temperature-human-body-impact",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T14:01:18.376Z",
+    "source": "paa",
+    "estimatedVolume": "low",
+    "competition": "low",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "건강 날씨 예보 확인 방법",
+    "slug": "how-to-check-health-weather-forecast",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T14:01:18.376Z",
+    "source": "trending|autocomplete",
+    "estimatedVolume": "low",
+    "competition": "low",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "목 아플 때 편의점 음식",
+    "slug": "neck-pain-convenience-store-food",
+    "category": "home-remedies",
+    "createdAt": "2026-03-04T14:04:05.308Z"
   }
 ]
