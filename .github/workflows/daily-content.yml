@@ -52,12 +52,18 @@ jobs:
           fi
 
       - name: Notify Telegram (Start)
-        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}
         continue-on-error: true
         run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
-          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="🚀 [오늘도 건강] Starting automated health article generation..."
+          if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="🚀 [오늘도 건강] Starting automated health article generation..."
+          else
+            echo "Telegram not configured, skipping."
+          fi
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Trend Hunting (Bot)
         env:
@@ -144,22 +150,27 @@ jobs:
         run: curl "https://www.google.com/ping?sitemap=https://www.wellnesstodays.com/sitemap.xml"
 
       - name: Notify Telegram (Success)
-        if: ${{ success() && secrets.TELEGRAM_BOT_TOKEN != '' }}
+        if: success()
         continue-on-error: true
         run: |
-          POST_URL="${{ steps.generate.outputs.POST_URL }}"
-          if [ -z "$POST_URL" ]; then
-            POST_URL="https://www.wellnesstodays.com"
+          if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="✅ [오늘도 건강] Health article published!"
           fi
-
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
-          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="✅ [오늘도 건강] Health article published! Check it out: ${POST_URL}"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Notify Telegram (Failure)
-        if: ${{ failure() && secrets.TELEGRAM_BOT_TOKEN != '' }}
+        if: failure()
         continue-on-error: true
         run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
-          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="❌ [오늘도 건강] Automation failed. Please check GitHub Actions logs."
+          if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="❌ [오늘도 건강] Automation failed. Check GitHub Actions logs."
+          fi
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
