@@ -18,8 +18,13 @@ async function refineContent(content: string, title: string): Promise<{ refinedC
     ## Goals:
     1. Title Optimization (CRITICAL):
        - Create a high-CTR, catchy Korean title based on the original title: "${title}".
-       - Use power words like "완벽 가이드", "전문가 추천", "효과 입증된", "꼭 알아야 할", "2026년 최신".
+       - Use power words like "완벽 가이드", "효과 입증된", "꼭 알아야 할", "2026년 최신".
+       - NEVER use "전문가 추천", "약사 추천", "의사 추천" — AI가 전문가를 사칭하면 안 됩니다.
        - Focus on health concern and practical solution angles.
+    8. 의약품/건강기능식품 안전 규칙 (매우 중요):
+       - "전문가 의견", "전문가 추천" 섹션이 있으면 "알아두면 좋은 점" 또는 "참고 사항"으로 변경하세요.
+       - 특정 약/영양제를 "추천합니다", "권합니다" 같은 직접 권유 표현이 있으면, "~이 있습니다", "~이 알려져 있습니다", "~을 고려해볼 수 있습니다"로 변경하세요.
+       - 의약품 관련 내용에는 "구체적인 복용은 약사 또는 의사와 상담하세요"라는 안내를 포함하세요.
     2. Humanize Body:
        - Remove repetitive or stiff AI-like phrasing.
        - Use natural, warm, yet professional Korean (trustworthy health advisor tone).

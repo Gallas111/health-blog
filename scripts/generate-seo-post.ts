@@ -303,7 +303,8 @@ async function generateSniperStrategy(category: string, researchData: string, pi
 
     ## CTR Title Optimization:
     Ensure "koreanTitle" is highly engaging to maximize CTR.
-    - Use phrases like "완벽 가이드", "전문가 추천", "효과 입증된", "꼭 알아야 할".
+    - Use phrases like "완벽 가이드", "효과 입증된", "꼭 알아야 할".
+    - NEVER use "전문가 추천", "약사 추천", "의사 추천" in titles — AI가 전문가를 사칭하면 안 됩니다.
     - Include the current year (2026) if relevant.
     - Focus on the reader's health concern and practical solution.
 
@@ -373,8 +374,15 @@ async function generateContent(strategy: SeoStrategy, pillarPost: BlogPost | und
         - Detailed Step-by-step Guide (7+ steps) for symptom management or health improvement.
         - Proper Markdown Checkbox list (start each line with "- ✅ ") with 10+ items.
         - In-depth Comparison Table (4+ columns, 5+ rows). Ensure standard GFM table format with header separators (e.g., |---|). Keep a blank line before and after the table.
-        - "전문가 의견" section with evidence-based insights.
+        - "알아두면 좋은 점" 또는 "참고 사항" section with evidence-based insights. (절대 "전문가 의견", "전문가 추천"이라는 표현 사용 금지)
     - Decision Criteria: Provide specific health metrics and guidelines.
+
+    ## 의약품/건강기능식품 관련 필수 규칙 (매우 중요):
+    - 특정 의약품, 건강기능식품, 영양제를 "추천합니다", "권합니다", "드세요"라고 직접 권유하지 마세요.
+    - 대신 "~이 있습니다", "~이 알려져 있습니다", "~을 고려해볼 수 있습니다" 등 정보 전달 형태로 작성하세요.
+    - "전문가 의견", "전문가 추천", "약사 추천", "의사 추천"이라는 표현을 절대 사용하지 마세요. AI가 전문가를 사칭해서는 안 됩니다.
+    - 의약품 관련 내용은 반드시 "구체적인 복용은 약사 또는 의사와 상담하세요"라는 안내를 포함하세요.
+    - "~하세요", "~드세요" 같은 지시형 대신 "~하는 것이 좋습니다", "~할 수 있습니다" 같은 정보 제공형으로 작성하세요.
 
     ## SEO & Internal Linking
     - Naturally weave these links into the text (don't just list them):
