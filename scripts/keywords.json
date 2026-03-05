@@ -150,5 +150,41 @@
     "slug": "neck-pain-convenience-store-food",
     "category": "home-remedies",
     "createdAt": "2026-03-04T14:04:05.308Z"
+  },
+  {
+    "mainKeyword": "추운 날씨 건강 유의사항",
+    "slug": "cold-weather-health-tips",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T23:51:13.652Z",
+    "source": "autocomplete",
+    "estimatedVolume": "high",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "더운 날씨 건강 관리법",
+    "slug": "hot-weather-health-management",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T23:51:13.652Z",
+    "source": "autocomplete",
+    "estimatedVolume": "high",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "사람이 죽는 온도 기준",
+    "slug": "lethal-temperature-threshold",
+    "category": "daily-health",
+    "createdAt": "2026-03-04T23:51:13.652Z",
+    "source": "paa",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "약 없이 불면증 치료",
+    "slug": "insomnia-treatment-without-medicine",
+    "category": "symptoms",
+    "createdAt": "2026-03-04T23:53:38.215Z"
   }
 ]
