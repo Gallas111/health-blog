@@ -186,5 +186,41 @@
     "slug": "insomnia-treatment-without-medicine",
     "category": "symptoms",
     "createdAt": "2026-03-04T23:53:38.215Z"
+  },
+  {
+    "mainKeyword": "전쟁으로 인한 스트레스 건강 관리법",
+    "slug": "war-stress-health-management-methods",
+    "category": "daily-health",
+    "createdAt": "2026-03-05T04:23:02.457Z",
+    "source": "autocomplete",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "전쟁이 인체에 미치는 정신적 신체적 영향",
+    "slug": "impact-of-war-on-human-mental-physical-health",
+    "category": "daily-health",
+    "createdAt": "2026-03-05T04:23:02.457Z",
+    "source": "autocomplete",
+    "estimatedVolume": "medium",
+    "competition": "medium",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "분쟁 지역 거주자 정신 건강 관리 팁",
+    "slug": "mental-health-tips-for-conflict-zone-residents",
+    "category": "daily-health",
+    "createdAt": "2026-03-05T04:23:02.457Z",
+    "source": "trending",
+    "estimatedVolume": "low",
+    "competition": "low",
+    "intent": "informational"
+  },
+  {
+    "mainKeyword": "수면 질 높이는 법",
+    "slug": "how-to-improve-sleep-quality",
+    "category": "daily-health",
+    "createdAt": "2026-03-05T04:25:14.740Z"
   }
 ]
