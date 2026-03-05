@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './PostCard.module.css';
 
 import { MDXPost } from '@/lib/mdx';
@@ -16,11 +15,10 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
         <article className={`${styles.card} ${className}`}>
             <Link href={`/blog/${post.slug}`} className={styles.link}>
                 <div className={styles.imageWrapper}>
-                    {/* Placeholder for now if no image provided, using a gradient div */}
                     {image ? (
                         <div className={styles.imageContainer}>
-                            {/* Note: Next.js Image requires width/height or fill. Using fill for responsive card. */}
-                            <Image src={image} alt={title} fill className={styles.image} />
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={image} alt={title} className={styles.image} />
                         </div>
                     ) : (
                         <div className={styles.placeholderImage}></div>

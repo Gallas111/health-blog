@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { getAdjacentPosts, getRelatedPosts, getPostBySlug } from '@/lib/mdx';
 import styles from './PostNavigation.module.css';
 
@@ -41,7 +40,8 @@ export default async function PostNavigation({ currentSlug, currentCategory }: P
                             <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.relatedCard}>
                                 <div className={styles.relatedImage}>
                                     {post.frontmatter.image ? (
-                                        <Image src={post.frontmatter.image} alt={post.frontmatter.title} fill style={{ objectFit: 'cover' }} />
+                                        /* eslint-disable-next-line @next/next/no-img-element */
+                                        <img src={post.frontmatter.image} alt={post.frontmatter.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (
                                         <div style={{ width: '100%', height: '100%', background: '#eee' }} />
                                     )}

@@ -12,10 +12,10 @@ import PostCard from "@/components/PostCard";
 import AuthorCard from "@/components/AuthorCard";
 import Breadcrumb from "@/components/Breadcrumb";
 import PharmacyBanner from "@/components/PharmacyBanner";
+import PharmacyBannerCompact from "@/components/PharmacyBannerCompact";
 import Disclaimer from "@/components/Disclaimer";
 import styles from "./page.module.css";
 import { Metadata } from "next";
-import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
@@ -131,12 +131,10 @@ export default async function BlogPost({ params }: PageProps) {
     const mdxComponents = {
         img: (props: any) => (
             <span className={styles.imageWrapper}>
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src={props.src}
                     alt={props.alt || ""}
-                    width={800}
-                    height={450}
-                    layout="responsive"
                     className={styles.optimizedImage}
                     loading="lazy"
                 />
@@ -191,6 +189,8 @@ export default async function BlogPost({ params }: PageProps) {
                         />
 
                         <TableOfContents headings={headings} mobile />
+
+                        <PharmacyBannerCompact />
 
                         <div className={styles.content}>
                             <MDXRemote
