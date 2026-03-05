@@ -291,6 +291,39 @@
 }
 
 @media (max-width: 768px) {
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .content h2 {
+        font-size: 1.35rem;
+        margin-top: 2.5rem;
+    }
+
+    .content h3 {
+        font-size: 1.15rem;
+        margin-top: 1.75rem;
+    }
+
+    .content {
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .content blockquote {
+        padding: 1rem 1.25rem;
+        margin: 1.5rem 0;
+    }
+
+    .content table {
+        font-size: 0.85rem;
+    }
+
+    .content th,
+    .content td {
+        padding: 0.5rem 0.625rem;
+    }
+
     .relatedGrid {
         grid-template-columns: 1fr;
     }
@@ -302,6 +335,18 @@
 
     .relatedTitle {
         font-size: 1.25rem;
+    }
+
+    .faqSection {
+        padding: 1.5rem;
+    }
+
+    .faqTitle {
+        font-size: 1.25rem;
+    }
+
+    .faqQuestion {
+        font-size: 1rem;
     }
 }
 

@@ -129,11 +129,23 @@
         grid-template-columns: 1fr;
     }
 
+    .navCard {
+        padding: 1rem 1.25rem;
+    }
+
     .navRight {
         text-align: left;
     }
 
+    .relatedTitle {
+        font-size: 1.25rem;
+    }
+
     .relatedGrid {
         grid-template-columns: 1fr;
+    }
+
+    .relatedContent {
+        padding: 0.75rem 1rem 1rem;
     }
 }

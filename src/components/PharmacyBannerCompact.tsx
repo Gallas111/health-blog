@@ -9,7 +9,7 @@ export default function PharmacyBannerCompact() {
                 href="https://www.yakchatja.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full text-sm font-bold transition-all hover:shadow-md"
+                className="inline-flex items-center justify-center gap-1 w-full sm:w-auto px-4 py-2.5 sm:py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full text-sm font-bold transition-all hover:shadow-md"
             >
                 약국찾자에서 가까운 약국 찾기 →
             </a>

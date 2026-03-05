@@ -96,7 +96,8 @@
     .tab {
         white-space: nowrap;
         flex-shrink: 0;
-        padding: 0.375rem 0.875rem;
+        padding: 0.5rem 1rem;
+        min-height: 44px;
         font-size: 0.8rem;
     }
 

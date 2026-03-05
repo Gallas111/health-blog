@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/owner/OneDrive/바탕 화면/사이트/health-blog/**)",
+      "Bash(done)",
+      "Bash(npx next:*)",
+      "WebFetch(domain:www.wellnesstodays.com)",
+      "Bash(curl:*)",
+      "Bash(find content:*)",
+      "Bash(npx eslint:*)"
+    ]
+  }
+}
