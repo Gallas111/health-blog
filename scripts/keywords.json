@@ -264,5 +264,11 @@
     "slug": "drug-interaction",
     "category": "pharmacy-guide",
     "createdAt": "2026-03-06T09:06:47.181Z"
+  },
+  {
+    "mainKeyword": "스트레스 해소법",
+    "slug": "stress-relief-methods",
+    "category": "daily-health",
+    "createdAt": "2026-03-06T13:37:57.805Z"
   }
 ]
