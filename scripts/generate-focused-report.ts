@@ -93,7 +93,7 @@ async function fetchAnalyticsData(authClient: any) {
                     fieldName: 'hostName',
                     stringFilter: {
                         matchType: 'CONTAINS',
-                        value: 'how-toai.com',
+                        value: 'wellnesstodays.com',
                     },
                 },
             },
@@ -113,19 +113,19 @@ async function generateFocusedInsights(gscData: any[], gaData: any[]) {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `
-당신은 'how-toai' 프로젝트 전담 SEO 및 수익형 블로그 컨설턴트입니다.
-제공된 데이터를 기반으로 'IT핫딜랩'과 관련된 정보는 무시하고, 오직 how-toai.com 블로그의 성장에만 집중한 리포트를 작성해주세요.
+당신은 '오늘도 건강(wellnesstodays.com)' 건강 블로그 전담 SEO 및 수익형 블로그 컨설턴트입니다.
+제공된 데이터를 기반으로 오직 wellnesstodays.com 건강 블로그의 성장에만 집중한 리포트를 작성해주세요.
 
 [GSC 데이터]
 ${JSON.stringify(gscData.slice(0, 20), null, 2)}
 
-[GA4 데이터 (how-toai 관련 페이지만 추출됨)]
+[GA4 데이터 (wellnesstodays.com 관련 페이지만 추출됨)]
 ${JSON.stringify(gaData.slice(0, 20), null, 2)}
 
 ### 리포트 구성 가이드:
-1. **[분석 리포트] how-toai 프로젝트 성장 현황** 이라는 제목으로 시작하세요.
-2. **📊 주요 성과 요약**: GSC에서 상위 노출되는 키워드(1~5위)와 낮은 클릭률(CTR) 문제를 강조하세요.
-3. **🚀 3단계 개선 전략**: 
+1. **[분석 리포트] 오늘도 건강 블로그 성장 현황** 이라는 제목으로 시작하세요.
+2. **📊 주요 성과 요약**: GSC에서 상위 노출되는 건강 관련 키워드(1~5위)와 클릭률(CTR) 분석을 강조하세요.
+3. **🚀 3단계 개선 전략**:
    - [Step 1] 클릭을 유도하는 구체적인 제목 변경 제안 (3가지 옵션)
    - [Step 2] 콘텐츠 내 사용자 체류 시간을 높이기 위한 구조적 개선안
    - [Step 3] 데이터 추적 최적화 방향
@@ -143,7 +143,7 @@ ${JSON.stringify(gaData.slice(0, 20), null, 2)}
  */
 async function main() {
     try {
-        console.log('🚀 how-toai 전담 자동 리포트 생성을 시작합니다...');
+        console.log('🚀 오늘도 건강 블로그 전담 자동 리포트 생성을 시작합니다...');
         const authClient = await authenticateGoogle();
 
         const gscData = await fetchSearchConsoleData(authClient);
@@ -183,7 +183,7 @@ async function main() {
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 how-toai 3일 주기 AI 성장 리포트</h1>
+            <h1>🏥 오늘도 건강 3일 주기 AI 성장 리포트</h1>
             <p>${dateStr} 기준 데이터 분석 결과</p>
         </div>
         <div class="content">
@@ -191,7 +191,7 @@ async function main() {
         </div>
         <div class="footer">
             본 리포트는 GitHub Actions를 통해 3일마다 자동으로 생성됩니다.<br>
-            © ${new Date().getFullYear()} how-toai Automation
+            © ${new Date().getFullYear()} 오늘도 건강 Automation
         </div>
     </div>
 </body>
@@ -199,9 +199,9 @@ async function main() {
         `;
 
         const mailOptions = {
-            from: `"how-toai 분석 도우미" <${EMAIL_USER}>`,
+            from: `"오늘도 건강 분석 도우미" <${EMAIL_USER}>`,
             to: EMAIL_RECEIVER,
-            subject: `[자동 보고] 📊 how-toai 성장을 위한 3일 주기 전략`,
+            subject: `[자동 보고] 🏥 오늘도 건강 블로그 3일 주기 성장 전략`,
             html: emailTemplate,
         };
 
