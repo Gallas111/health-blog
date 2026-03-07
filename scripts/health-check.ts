@@ -1,5 +1,5 @@
 /**
- * Health Check Bot for AI Blog
+ * Health Check Bot for Health Blog
  *
  * Scans all MDX content for broken images, links, render issues,
  * and MDX syntax problems. Automatically fixes what it can.
@@ -316,8 +316,16 @@ function scanMdxSyntax(posts: PostInfo[]): void {
 
   for (const post of posts) {
     const lines = post.content.split('\n');
+    let inCodeBlock = false;
     for (let lineIdx = 0; lineIdx < lines.length; lineIdx++) {
       const line = lines[lineIdx];
+
+      // Skip lines inside fenced code blocks
+      if (/^```/.test(line.trim())) {
+        inCodeBlock = !inCodeBlock;
+        continue;
+      }
+      if (inCodeBlock) continue;
 
       // Check for {#custom-id} patterns in headings
       if (/^#{1,6}\s/.test(line) && /\{#[^}]+\}/.test(line)) {
@@ -701,7 +709,7 @@ function printReport(totalPosts: number, buildOk: boolean): void {
 
 async function main() {
   console.log('\n' + '═'.repeat(60));
-  log('🏥', 'AI Blog Health Check Bot');
+  log('🏥', 'Health Blog Health Check Bot');
   console.log('═'.repeat(60) + '\n');
 
   // ── Collect all posts ──

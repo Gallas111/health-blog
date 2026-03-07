@@ -39,9 +39,11 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
-        run: npx tsx scripts/health-check.ts
+        run: npx tsx scripts/health-check.ts 2>&1 | tee /tmp/healthcheck.log
+        continue-on-error: true
 
       - name: Commit fixes if any
+        id: commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -64,16 +66,49 @@ jobs:
       - name: Notify Telegram (Result)
         if: always()
         run: |
-          FIXES=$(git log --oneline -1 2>/dev/null | grep -c "health-check" || echo "0")
-          if [ "${{ job.status }}" = "success" ]; then
-            if [ "$FIXES" -gt 0 ]; then
-              MSG="✅ [Health Blog] Health check 완료 — 오류 수정 후 배포됨"
+          LOG="/tmp/healthcheck.log"
+          POSTS=$(grep -oP 'Total posts scanned:\s+\K\d+' "$LOG" 2>/dev/null || echo "?")
+          ISSUES=$(grep -oP 'Total issues found:\s+\K\d+' "$LOG" 2>/dev/null || echo "?")
+          FIXES=$(grep -oP 'Fixes applied:\s+\K\d+' "$LOG" 2>/dev/null || echo "0")
+          REMAINING=$(grep -oP 'Remaining issues:\s+\K\d+' "$LOG" 2>/dev/null || echo "0")
+
+          # Build detail lines from remaining issue entries (lines starting with "    - [")
+          DETAILS=""
+          if [ "$REMAINING" != "0" ]; then
+            DETAILS=$(grep -P '^\s+- \[' "$LOG" 2>/dev/null | sed 's/^\s*//' | head -10)
+          fi
+
+          # Build fix detail from "Fixed" lines
+          FIX_DETAILS=""
+          if [ "$FIXES" != "0" ]; then
+            FIX_DETAILS=$(grep -P '^✅ Fixed' "$LOG" 2>/dev/null | head -10)
+          fi
+
+          if [ "${{ steps.healthcheck.outcome }}" = "success" ]; then
+            if [ "$FIXES" -gt 0 ] 2>/dev/null; then
+              MSG="✅ [Health Blog] Health check 완료
+          📊 스캔: ${POSTS}개 포스트
+          🔧 수정: ${FIXES}건 자동 수정됨"
+              [ -n "$FIX_DETAILS" ] && MSG="${MSG}
+          ${FIX_DETAILS}"
+              [ "$REMAINING" != "0" ] && MSG="${MSG}
+          ⚠️ 미해결: ${REMAINING}건
+          ${DETAILS}"
             else
-              MSG="✅ [Health Blog] Health check 완료 — 이상 없음"
+              MSG="✅ [Health Blog] Health check 완료 — 이상 없음
+          📊 스캔: ${POSTS}개 포스트"
             fi
           else
-            MSG="❌ [Health Blog] Health check 실패 — 로그 확인 필요"
+            MSG="❌ [Health Blog] Health check 실패
+          📊 스캔: ${POSTS}개 포스트 / 발견: ${ISSUES}건 / 수정: ${FIXES}건"
+            [ -n "$FIX_DETAILS" ] && MSG="${MSG}
+          ${FIX_DETAILS}"
+            [ "$REMAINING" != "0" ] && MSG="${MSG}
+          ⚠️ 미해결: ${REMAINING}건
+          ${DETAILS}"
           fi
+
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-            -d text="${MSG}" || true
+            -d parse_mode=HTML \
+            --data-urlencode "text=${MSG}" || true
