@@ -23,6 +23,8 @@ import remarkGfm from "remark-gfm";
 import "highlight.js/styles/atom-one-dark.css";
 import Callout from "@/components/Callout";
 import ProsCons from "@/components/ProsCons";
+import KeyTakeaway from "@/components/KeyTakeaway";
+import ScrollTracker from "@/components/ScrollTracker";
 
 
 interface PageProps {
@@ -142,6 +144,7 @@ export default async function BlogPost({ params }: PageProps) {
         ),
         Callout,
         ProsCons,
+        KeyTakeaway,
     };
 
     const breadcrumbItems = categoryInfo ? [
@@ -151,6 +154,7 @@ export default async function BlogPost({ params }: PageProps) {
 
     return (
         <>
+            <ScrollTracker />
             <ReadingProgress />
             <div className={styles.container}>
                 <div className={styles.layout}>
