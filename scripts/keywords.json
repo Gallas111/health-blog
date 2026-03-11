@@ -288,5 +288,119 @@
     "slug": "vitamin-d-overdose",
     "category": "supplements",
     "createdAt": "2026-03-07T06:03:08.359Z"
+  },
+  {
+    "mainKeyword": "프로바이오틱스 섭취 주의사항",
+    "slug": "probiotics-intake-precautions",
+    "category": "supplements",
+    "createdAt": "2026-03-07T08:56:59.839Z"
+  },
+  {
+    "mainKeyword": "변비에 좋은 음식",
+    "slug": "foods-good-for-constipation",
+    "category": "home-remedies",
+    "createdAt": "2026-03-07T13:17:18.561Z"
+  },
+  {
+    "mainKeyword": "디지털 디톡스",
+    "slug": "digital-detox",
+    "category": "daily-health",
+    "createdAt": "2026-03-07T23:45:36.526Z"
+  },
+  {
+    "mainKeyword": "번아웃 증후군 예방",
+    "slug": "burnout-syndrome-prevention",
+    "category": "daily-health",
+    "createdAt": "2026-03-08T04:25:11.084Z"
+  },
+  {
+    "mainKeyword": "편두통 예방 방법",
+    "slug": "migraine-prevention-methods",
+    "category": "symptoms",
+    "createdAt": "2026-03-08T06:07:14.612Z"
+  },
+  {
+    "mainKeyword": "소화불량 원인",
+    "slug": "indigestion-causes",
+    "category": "symptoms",
+    "createdAt": "2026-03-08T08:59:00.919Z"
+  },
+  {
+    "mainKeyword": "위염 증상",
+    "slug": "gastritis-symptoms",
+    "category": "symptoms",
+    "createdAt": "2026-03-08T13:25:31.693Z"
+  },
+  {
+    "mainKeyword": "어깨 통증 완화 스트레칭",
+    "slug": "shoulder-pain-relief-stretching",
+    "category": "daily-health",
+    "createdAt": "2026-03-08T23:46:59.696Z"
+  },
+  {
+    "mainKeyword": "철분 부족 증상",
+    "slug": "iron-deficiency-symptoms",
+    "category": "symptoms",
+    "createdAt": "2026-03-09T04:31:52.008Z"
+  },
+  {
+    "mainKeyword": "처방전 없이 살 수 있는 약 복용법",
+    "slug": "instructions-for-over-the-counter-medicine",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-09T09:12:24.568Z"
+  },
+  {
+    "mainKeyword": "과민성 대장 증후군 유산균",
+    "slug": "irritable-bowel-syndrome-probiotics",
+    "category": "supplements",
+    "createdAt": "2026-03-09T13:47:32.625Z"
+  },
+  {
+    "mainKeyword": "눈 피로 회복 방법",
+    "slug": "eye-fatigue-recovery-methods",
+    "category": "home-remedies",
+    "createdAt": "2026-03-09T23:51:47.327Z"
+  },
+  {
+    "mainKeyword": "약 복용 시간",
+    "slug": "medication-time",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-10T04:24:01.559Z"
+  },
+  {
+    "mainKeyword": "오른쪽 관자놀이 통증 원인",
+    "slug": "cause-of-right-temple-pain",
+    "category": "symptoms",
+    "createdAt": "2026-03-10T06:09:11.382Z"
+  },
+  {
+    "mainKeyword": "스트레스 완화 호흡법",
+    "slug": "stress-relief-breathing-technique",
+    "category": "daily-health",
+    "createdAt": "2026-03-10T09:12:29.463Z"
+  },
+  {
+    "mainKeyword": "일반약 술",
+    "slug": "otc-drug-alcohol",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-10T13:46:14.033Z"
+  },
+  {
+    "mainKeyword": "영양제 약 상호작용",
+    "slug": "supplement-drug-interaction",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-10T23:52:04.716Z"
+  },
+  {
+    "mainKeyword": "두통 원인",
+    "slug": "headache-cause",
+    "category": "symptoms",
+    "createdAt": "2026-03-11T04:27:20.037Z"
+  },
+  {
+    "mainKeyword": "불면증 해결 숙면 습관",
+    "slug": "insomnia-cure-deep-sleep-habits",
+    "category": "symptoms",
+    "createdAt": "2026-03-11T06:12:07.115Z"
   }
 ]
