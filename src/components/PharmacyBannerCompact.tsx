@@ -1,3 +1,15 @@
+'use client';
+
+function trackClick() {
+    if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'cta_click', {
+            cta_type: 'pharmacy_banner_compact',
+            cta_location: 'post_top',
+            outbound_url: 'https://www.yakchatja.com',
+        });
+    }
+}
+
 export default function PharmacyBannerCompact() {
     return (
         <div className="my-4 px-4 py-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800/30 flex items-center gap-3 flex-wrap">
@@ -9,6 +21,7 @@ export default function PharmacyBannerCompact() {
                 href="https://www.yakchatja.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={trackClick}
                 className="inline-flex items-center justify-center gap-1 w-full sm:w-auto px-4 py-2.5 sm:py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full text-sm font-bold transition-all hover:shadow-md"
             >
                 약국찾자에서 가까운 약국 찾기 →

@@ -10,7 +10,18 @@ interface ShareButtonsProps {
 export default function ShareButtons({ title, slug }: ShareButtonsProps) {
     const url = `https://www.wellnesstodays.com/blog/${slug}`;
 
+    const trackShare = (method: string) => {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', 'share', {
+                method,
+                content_type: 'article',
+                item_id: slug,
+            });
+        }
+    };
+
     const shareTwitter = () => {
+        trackShare('twitter');
         window.open(
             `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
             '_blank', 'width=600,height=400'
@@ -18,6 +29,7 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
     };
 
     const copyLink = async () => {
+        trackShare('copy_link');
         try {
             await navigator.clipboard.writeText(url);
             const btn = document.getElementById('copy-btn');
@@ -37,6 +49,7 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
     };
 
     const shareKakao = () => {
+        trackShare('native_share');
         // Fallback: share via native share API or copy
         if (navigator.share) {
             navigator.share({ title, url });

@@ -25,6 +25,7 @@ import Callout from "@/components/Callout";
 import ProsCons from "@/components/ProsCons";
 import KeyTakeaway from "@/components/KeyTakeaway";
 import ScrollTracker from "@/components/ScrollTracker";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 
 interface PageProps {
@@ -145,6 +146,7 @@ export default async function BlogPost({ params }: PageProps) {
         Callout,
         ProsCons,
         KeyTakeaway,
+        YouTubeEmbed,
     };
 
     const breadcrumbItems = categoryInfo ? [
@@ -180,7 +182,7 @@ export default async function BlogPost({ params }: PageProps) {
                                 <span className={styles.category}>{post.category}</span>
                                 <span className={styles.date}>{post.frontmatter.date}</span>
                                 <span className={styles.readTime}>
-                                    <Clock size={14} /> {post.readingTime || "5 min read"}
+                                    <Clock size={14} /> {post.readingTime || "5분"}
                                 </span>
                             </div>
                             <h1 className={styles.title}>{post.frontmatter.title}</h1>
@@ -189,7 +191,7 @@ export default async function BlogPost({ params }: PageProps) {
                         {/* Author 카드 - E-E-A-T 강화 */}
                         <AuthorCard
                             date={post.frontmatter.date}
-                            readingTime={post.readingTime || "5 min read"}
+                            readingTime={post.readingTime || "5분"}
                         />
 
                         <TableOfContents headings={headings} mobile />

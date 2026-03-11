@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import styles from './PostCard.module.css';
 
@@ -11,9 +13,19 @@ interface PostCardProps {
 export default function PostCard({ post, className = '' }: PostCardProps) {
     const { title, description, date, category, image } = post.frontmatter;
 
+    const trackClick = () => {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', 'internal_link_click', {
+                link_type: 'related_post',
+                target_slug: post.slug,
+                target_title: title,
+            });
+        }
+    };
+
     return (
         <article className={`${styles.card} ${className}`}>
-            <Link href={`/blog/${post.slug}`} className={styles.link}>
+            <Link href={`/blog/${post.slug}`} className={styles.link} onClick={trackClick}>
                 <div className={styles.imageWrapper}>
                     {image ? (
                         <div className={styles.imageContainer}>

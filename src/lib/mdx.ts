@@ -23,6 +23,14 @@ export interface MDXPost {
 
 const contentDirectory = path.join(process.cwd(), "content");
 
+// 한국어 기준 분당 약 500자 읽기 속도
+export function calculateReadingTime(content: string): string {
+    const text = content.replace(/[#*`\[\]()!>\-|]/g, '').trim();
+    const charCount = text.length;
+    const minutes = Math.ceil(charCount / 500);
+    return `${Math.max(1, minutes)}분`;
+}
+
 // Get all MDX files recursively
 export function getAllPosts(): MDXPost[] {
     if (!fs.existsSync(contentDirectory)) return [];
@@ -46,6 +54,7 @@ export function getAllPosts(): MDXPost[] {
                         category,
                         content,
                         frontmatter: data as MDXPost["frontmatter"],
+                        readingTime: calculateReadingTime(content),
                     });
                 }
             });
@@ -76,6 +85,7 @@ export function getPostBySlug(slug: string): MDXPost | null {
                     category,
                     content,
                     frontmatter: data as MDXPost["frontmatter"],
+                    readingTime: calculateReadingTime(content),
                 };
                 break;
             }
