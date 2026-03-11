@@ -384,5 +384,11 @@
     "slug": "otc-drug-alcohol",
     "category": "pharmacy-guide",
     "createdAt": "2026-03-10T13:46:14.033Z"
+  },
+  {
+    "mainKeyword": "영양제 약 상호작용",
+    "slug": "supplement-drug-interaction",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-10T23:52:04.716Z"
   }
 ]
