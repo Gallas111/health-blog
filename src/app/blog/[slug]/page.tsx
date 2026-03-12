@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
-import { getPostBySlug, getHeadings, getPostsByCategory, getAllPosts } from "@/lib/mdx";
+import { getPostBySlug, getHeadings, getPostsByCategory, getAllPosts, getAdjacentPosts } from "@/lib/mdx";
 import { getCategoryByFolderName } from "@/lib/categories";
 import ShareButtons from "@/components/ShareButtons";
 import PostNavigation from "@/components/PostNavigation";
@@ -26,6 +26,7 @@ import ProsCons from "@/components/ProsCons";
 import KeyTakeaway from "@/components/KeyTakeaway";
 import ScrollTracker from "@/components/ScrollTracker";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
+import SwipeNavigation from "@/components/SwipeNavigation";
 
 
 interface PageProps {
@@ -79,6 +80,7 @@ export default async function BlogPost({ params }: PageProps) {
     }
 
     const headings = getHeadings(post.content);
+    const { prev, next } = getAdjacentPosts(decodedSlug);
     const categoryInfo = getCategoryByFolderName(post.category);
 
     // [SEO Logic] Related Posts System
@@ -156,6 +158,7 @@ export default async function BlogPost({ params }: PageProps) {
 
     return (
         <>
+            <SwipeNavigation prevSlug={prev?.slug} nextSlug={next?.slug} />
             <ScrollTracker />
             <ReadingProgress />
             <div className={styles.container}>

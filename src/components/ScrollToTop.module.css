@@ -35,8 +35,8 @@
 
 @media (max-width: 768px) {
     .button {
-        bottom: 1.5rem;
-        right: 1.5rem;
+        bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+        right: calc(1.5rem + env(safe-area-inset-right, 0px));
         width: 2.5rem;
         height: 2.5rem;
     }

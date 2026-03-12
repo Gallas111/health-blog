@@ -4,6 +4,7 @@
     /* Header height + buffer */
     padding: 1rem 0;
     max-height: calc(100vh - 8rem);
+    max-height: calc(100dvh - 8rem);
     overflow-y: auto;
 }
 

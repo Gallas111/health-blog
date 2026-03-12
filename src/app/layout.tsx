@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
@@ -8,6 +8,13 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.wellnesstodays.com"),
@@ -124,7 +131,7 @@ export default function RootLayout({
           }}
         />
         <Header posts={searchPosts} />
-        <main style={{ minHeight: 'calc(100vh - 200px)' }}>
+        <main style={{ minHeight: 'calc(100dvh - 200px)' }}>
           {children}
         </main>
         <Footer />

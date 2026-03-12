@@ -5,6 +5,7 @@
     width: 100%;
     border-bottom: 1px solid #e5e7eb;
     background: #ffffff;
+    padding-top: env(safe-area-inset-top, 0px);
 }
 
 .container {
