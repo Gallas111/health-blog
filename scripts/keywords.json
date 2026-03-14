@@ -426,5 +426,59 @@
     "slug": "morning-neck-stiffness-cause",
     "category": "symptoms",
     "createdAt": "2026-03-12T04:51:26.451Z"
+  },
+  {
+    "mainKeyword": "계단 오를 때 무릎 통증",
+    "slug": "knee-pain-when-climbing-stairs",
+    "category": "symptoms",
+    "createdAt": "2026-03-12T06:15:07.466Z"
+  },
+  {
+    "mainKeyword": "정신적 피로 해소법",
+    "slug": "mental-fatigue-relief-method",
+    "category": "daily-health",
+    "createdAt": "2026-03-12T09:12:46.504Z"
+  },
+  {
+    "mainKeyword": "의약품 상호작용",
+    "slug": "drug-interaction",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-12T13:44:07.936Z"
+  },
+  {
+    "mainKeyword": "면역력 높이는 방법",
+    "slug": "how-to-boost-immunity",
+    "category": "daily-health",
+    "createdAt": "2026-03-12T23:50:51.777Z"
+  },
+  {
+    "mainKeyword": "오메가3 복용 주의사항",
+    "slug": "omega-3-precautions",
+    "category": "supplements",
+    "createdAt": "2026-03-13T04:26:02.043Z"
+  },
+  {
+    "mainKeyword": "갑자기 어지러움 원인",
+    "slug": "sudden-dizziness-cause",
+    "category": "symptoms",
+    "createdAt": "2026-03-13T06:12:20.532Z"
+  },
+  {
+    "mainKeyword": "식후 어지러움 원인",
+    "slug": "postprandial-dizziness-cause",
+    "category": "symptoms",
+    "createdAt": "2026-03-13T13:42:33.982Z"
+  },
+  {
+    "mainKeyword": "목아플때 좋은 음식",
+    "slug": "foods-good-for-sore-throat",
+    "category": "home-remedies",
+    "createdAt": "2026-03-13T23:52:38.457Z"
+  },
+  {
+    "mainKeyword": "잦은 소화불량 해결",
+    "slug": "solving-frequent-indigestion",
+    "category": "home-remedies",
+    "createdAt": "2026-03-14T04:23:49.897Z"
   }
 ]
