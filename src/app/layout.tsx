@@ -47,7 +47,10 @@ export const metadata: Metadata = {
   },
   keywords: ["건강 정보", "증상 원인", "영양제 효능", "민간요법", "좋은 음식", "생활건강", "약국 정보", "비타민D", "감기 빨리 낫는 법", "오늘도 건강"],
   alternates: {
-    canonical: "./",
+    canonical: "https://www.wellnesstodays.com",
+    types: {
+      "application/rss+xml": "https://www.wellnesstodays.com/feed.xml",
+    },
   },
   robots: {
     index: true,
