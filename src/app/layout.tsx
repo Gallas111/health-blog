@@ -88,6 +88,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import GoogleAdSense from "@/components/GoogleAdSense";
+import RouteChangeTracker from "@/components/RouteChangeTracker";
 
 
 import { getAllPosts } from "@/lib/mdx";
@@ -136,6 +137,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
+        <RouteChangeTracker />
         {process.env.NODE_ENV === "production" && gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>

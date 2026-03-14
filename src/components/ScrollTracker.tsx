@@ -1,9 +1,16 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function ScrollTracker() {
     const firedRef = useRef<Set<number>>(new Set());
+    const pathname = usePathname();
+
+    // Reset fired thresholds when the route changes
+    useEffect(() => {
+        firedRef.current.clear();
+    }, [pathname]);
 
     useEffect(() => {
         const thresholds = [25, 50, 75, 90];
@@ -29,7 +36,7 @@ export default function ScrollTracker() {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [pathname]);
 
     return null;
 }
