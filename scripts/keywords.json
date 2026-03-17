@@ -552,5 +552,11 @@
     "slug": "cant-sleep-at-night",
     "category": "symptoms",
     "createdAt": "2026-03-16T14:02:31.960Z"
+  },
+  {
+    "mainKeyword": "비타민D 부족 증상",
+    "slug": "vitamin-d-deficiency-symptoms",
+    "category": "supplements",
+    "createdAt": "2026-03-16T23:53:06.216Z"
   }
 ]
