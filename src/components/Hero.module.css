@@ -57,6 +57,41 @@
     display: block;
 }
 
+.quickLinks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.quickLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.4rem 0.875rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    color: #374151;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.quickLink:hover {
+    border-color: #16a34a;
+    color: #16a34a;
+    background: #f0fdf4;
+}
+
+.quickLinkIcon {
+    font-size: 0.875rem;
+    line-height: 1;
+}
+
 @media (max-width: 768px) {
     .hero {
         padding: 2.5rem 1rem 2rem;

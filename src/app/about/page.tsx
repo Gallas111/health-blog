@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Heart, BookOpen, Shield } from 'lucide-react';
+import { ArrowRight, Heart, BookOpen, Shield, FileCheck, RefreshCw, AlertTriangle } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: '소개 | 오늘도 건강',
-    description: '오늘도 건강은 증상별 건강정보, 영양제 효능, 민간요법, 생활건강 상식을 쉽고 정확하게 전달하는 건강 정보 블로그입니다.',
+    title: '소개 및 편집 정책 | 오늘도 건강',
+    description: '오늘도 건강의 편집 원칙, 출처 정책, 업데이트 기준을 안내합니다. 공공 의료 자료 기반의 생활건강 정보 사이트입니다.',
 };
 
 export default function AboutPage() {
@@ -83,6 +83,78 @@ export default function AboutPage() {
                     </div>
                     <h3 className="text-lg font-bold mb-2">쉬운 설명</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">전문 용어 없이 누구나 이해할 수 있는 쉬운 언어로 건강 정보를 전달합니다.</p>
+                </div>
+            </div>
+
+            {/* Editorial Policy Section */}
+            <div id="editorial-policy" className="mb-20 scroll-mt-24">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">편집 원칙 및 콘텐츠 정책</h2>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-600">
+                                <FileCheck size={20} />
+                            </div>
+                            <h3 className="text-lg font-bold">출처 및 참고 기준</h3>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>질병관리청, 식품의약품안전처 등 국내 공공 의료 기관 자료</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>WHO, NIH, Mayo Clinic 등 국제 의료 기관 공개 자료</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>PubMed 등재 학술 문헌 및 체계적 리뷰</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>단일 연구나 검증되지 않은 주장은 기재하지 않습니다</li>
+                        </ul>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center text-teal-600">
+                                <Shield size={20} />
+                            </div>
+                            <h3 className="text-lg font-bold">편집 원칙</h3>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>생활 관리 가능한 내용과 의료 상담이 필요한 상황을 구분합니다</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>자가 진단을 부추기거나 불안을 유발하는 표현을 사용하지 않습니다</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>없는 의료 자격이나 임상 경험을 주장하지 않습니다</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>특정 제품이나 브랜드를 추천하지 않습니다</li>
+                        </ul>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center text-cyan-600">
+                                <RefreshCw size={20} />
+                            </div>
+                            <h3 className="text-lg font-bold">업데이트 정책</h3>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>주요 의료 가이드라인이 변경되면 관련 글을 수정합니다</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>오류가 발견되면 확인 후 즉시 정정합니다</li>
+                            <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 flex-shrink-0">&#8226;</span>각 글의 작성일을 표기하여 정보의 시점을 알 수 있도록 합니다</li>
+                        </ul>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center text-amber-600">
+                                <AlertTriangle size={20} />
+                            </div>
+                            <h3 className="text-lg font-bold">이 사이트가 아닌 것</h3>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5 flex-shrink-0">&#8226;</span>의료 기관이 아닙니다 — 진단이나 처방을 하지 않습니다</li>
+                            <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5 flex-shrink-0">&#8226;</span>의사 감수를 거친 의학 사이트가 아닙니다</li>
+                            <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5 flex-shrink-0">&#8226;</span>여기서 읽은 내용으로 스스로 진단하거나 치료를 결정하지 마세요</li>
+                            <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5 flex-shrink-0">&#8226;</span>증상이 걱정된다면 가까운 의료기관이나 약국을 방문하세요</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5 text-center">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        오류 제보, 내용 정정 요청, 기타 문의는 <a href="mailto:contact@wellnesstodays.com" className="text-emerald-600 hover:underline font-medium">contact@wellnesstodays.com</a>으로 보내주세요.
+                    </p>
                 </div>
             </div>
 

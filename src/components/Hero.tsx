@@ -2,6 +2,14 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import styles from './Hero.module.css';
 
+const quickLinks = [
+    { href: '/blog/category/symptoms', icon: '🩺', label: '증상별 건강정보' },
+    { href: '/blog/category/supplements', icon: '💊', label: '영양제 정보' },
+    { href: '/blog/category/home-remedies', icon: '🍵', label: '민간요법·좋은음식' },
+    { href: '/blog/category/daily-health', icon: '🏃', label: '생활건강 상식' },
+    { href: '/blog/category/pharmacy-guide', icon: '🏥', label: '약국·의약품 상식' },
+];
+
 export default function Hero() {
     return (
         <section className={styles.hero}>
@@ -23,6 +31,14 @@ export default function Hero() {
                         가까운 약국 찾기
                     </a>
                 </div>
+                <nav className={styles.quickLinks} aria-label="카테고리 바로가기">
+                    {quickLinks.map(({ href, icon, label }) => (
+                        <Link key={href} href={href} className={styles.quickLink}>
+                            <span className={styles.quickLinkIcon}>{icon}</span>
+                            {label}
+                        </Link>
+                    ))}
+                </nav>
             </div>
         </section>
     );

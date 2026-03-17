@@ -71,6 +71,17 @@
     color: #9ca3af;
 }
 
+.policyLink {
+    font-size: 0.75rem;
+    color: #16a34a;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.policyLink:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 640px) {
     .card {
         flex-direction: column;

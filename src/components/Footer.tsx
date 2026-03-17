@@ -50,16 +50,22 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
+                <div className={styles.trustNotice}>
+                    <p>이 사이트의 건강 정보는 공공 의료 자료를 참고한 생활건강 참고용이며, 의학적 진단이나 처방을 대체하지 않습니다.</p>
+                </div>
+
                 <div className={styles.bottom}>
                     <p className={styles.copy}>
                         &copy; {new Date().getFullYear()} 오늘도 건강. All rights reserved.
                     </p>
                     <div className={styles.bottomLinks}>
-                        <Link href="/privacy">Privacy Policy</Link>
+                        <Link href="/about#editorial-policy">편집 정책</Link>
                         <span className={styles.divider}>|</span>
-                        <Link href="/terms">Terms of Service</Link>
+                        <Link href="/privacy">개인정보처리방침</Link>
                         <span className={styles.divider}>|</span>
-                        <Link href="/contact">Contact</Link>
+                        <Link href="/terms">이용약관</Link>
+                        <span className={styles.divider}>|</span>
+                        <Link href="/contact">문의</Link>
                     </div>
                 </div>
             </div>

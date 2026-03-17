@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './AuthorCard.module.css';
 
 interface AuthorCardProps {
@@ -19,16 +20,16 @@ export default function AuthorCard({
             <div className={styles.info}>
                 <div className={styles.nameRow}>
                     <span className={styles.name}>{name}</span>
-                    <span className={styles.badge}>건강 정보 에디터</span>
+                    <span className={styles.badge}>건강 정보 편집팀</span>
                 </div>
                 <p className={styles.bio}>
-                    신뢰할 수 있는 건강 정보를 쉽고 정확하게 전달합니다.
-                    증상, 영양제, 민간요법, 생활건강 분야를 전문으로 다룹니다.
+                    공공 의료 자료와 학술 문헌을 바탕으로 생활건강 정보를 정리합니다.
+                    이 글은 의학적 진단이 아닌 일반 정보 제공 목적입니다.
                 </p>
                 <div className={styles.meta}>
                     {date && <span className={styles.metaItem}>📅 {date}</span>}
                     {readingTime && <span className={styles.metaItem}>⏱️ {readingTime}</span>}
-                    <span className={styles.metaItem}>🌐 wellnesstodays.com</span>
+                    <Link href="/about#editorial-policy" className={styles.policyLink}>편집 원칙 보기</Link>
                 </div>
             </div>
         </div>
