@@ -600,5 +600,11 @@
     "slug": "over-the-counter-medicine",
     "category": "pharmacy-guide",
     "createdAt": "2026-03-18T06:43:32.114Z"
+  },
+  {
+    "mainKeyword": "장 건강 식단",
+    "slug": "gut-health-diet",
+    "category": "daily-health",
+    "createdAt": "2026-03-18T09:31:28.890Z"
   }
 ]
