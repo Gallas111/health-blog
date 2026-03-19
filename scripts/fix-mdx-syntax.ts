@@ -3,9 +3,9 @@
  * Fixes common MDX issues that break static export builds:
  * - Broken closing tags (</n>, </nCallout>, </nazar>, etc.)
  * - Bare <br> tags → <br />
- * - HTML comments <!-- --> → {/* */}
+ * - HTML comments to MDX comments
  * - Indented code fences (4-space indent)
- * - Unescaped {{ }} template literals
+ * - Unescaped double curly braces
  */
 
 import fs from "fs";
