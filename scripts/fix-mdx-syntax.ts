@@ -119,8 +119,31 @@ function fixFile(filePath: string): number {
         }
     }
     if (braceFixed) {
-        issues.push("unescaped {{ }}");
+        issues.push("unescaped double braces");
         content = escapedLines.join("\n");
+    }
+
+    // 6. Fix bare < followed by number/symbol in table cells (e.g. <13 -> &lt;13)
+    const ltLines = content.split("\n");
+    inCodeBlock = false;
+    let ltFixed = false;
+
+    for (let i = 0; i < ltLines.length; i++) {
+        if (ltLines[i].trim().startsWith("```")) {
+            inCodeBlock = !inCodeBlock;
+            continue;
+        }
+        if (inCodeBlock) continue;
+
+        // Only fix in table rows (lines starting with |)
+        if (ltLines[i].includes("|") && /<\d/.test(ltLines[i])) {
+            ltLines[i] = ltLines[i].replace(/<(\d)/g, "&lt;$1");
+            ltFixed = true;
+        }
+    }
+    if (ltFixed) {
+        issues.push("bare < in tables");
+        content = ltLines.join("\n");
     }
 
     // Write if changed
