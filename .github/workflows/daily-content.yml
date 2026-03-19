@@ -80,6 +80,11 @@ jobs:
       - name: Internal Linking (Bot)
         run: npx tsx scripts/internal-linker.ts
 
+      - name: Fix MDX Syntax (Static Export Guard)
+        run: |
+          echo "🔧 Running MDX Syntax Fixer for Cloudflare Pages compatibility..."
+          npx tsx scripts/fix-mdx-syntax.ts
+
       - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
