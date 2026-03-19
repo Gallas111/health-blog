@@ -109,8 +109,12 @@
         flex-direction: column;
     }
 
-    .cta,
-    :global(.button-outline) {
+    .cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .buttonOutline {
         width: 100%;
         justify-content: center;
     }

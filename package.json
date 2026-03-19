@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx tsx scripts/generate-sitemap.ts && npx tsx scripts/generate-feed.ts && next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "blog:detect": "tsx scripts/detect-trends.ts",

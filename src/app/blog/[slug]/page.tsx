@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getPostBySlug, getHeadings, getPostsByCategory, getAllPosts, getAdjacentPosts } from "@/lib/mdx";
 import { getCategoryByFolderName } from "@/lib/categories";
 import ShareButtons from "@/components/ShareButtons";
@@ -28,6 +28,12 @@ import ScrollTracker from "@/components/ScrollTracker";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 import SwipeNavigation from "@/components/SwipeNavigation";
 
+
+export async function generateStaticParams() {
+    return getAllPosts().map((post) => ({
+        slug: post.slug,
+    }));
+}
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -76,7 +82,7 @@ export default async function BlogPost({ params }: PageProps) {
     const post = getPostBySlug(decodedSlug);
 
     if (!post) {
-        redirect("/blog");
+        notFound();
     }
 
     const headings = getHeadings(post.content);

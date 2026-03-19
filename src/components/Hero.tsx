@@ -27,7 +27,7 @@ export default function Hero() {
                     <Link href="/blog" className={`button button-primary ${styles.cta}`}>
                         건강 정보 보기 <ArrowRight size={18} />
                     </Link>
-                    <a href="https://www.yakchatja.com" target="_blank" rel="noopener noreferrer" className="button button-outline">
+                    <a href="https://www.yakchatja.com" target="_blank" rel="noopener noreferrer" className={`button button-outline ${styles.buttonOutline}`}>
                         가까운 약국 찾기
                     </a>
                 </div>
