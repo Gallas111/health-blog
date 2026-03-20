@@ -103,19 +103,20 @@ async function performResearch(category: string): Promise<string> {
         const secondaryQuery = seeds.filter(s => s !== primaryQuery)[0] || primaryQuery;
 
         // Fetch all 4 sources in parallel (Google Search includes PAA for free)
+        const safeFetch = (url: string) => fetch(url).then(r => r.json()).then(data => {
+            if (data.error) { console.warn(`  ⚠️ SearchAPI: ${data.error}`); return {}; }
+            return data;
+        }).catch(() => ({}));
+
         const [googleData, autocompleteData, youtubeData, newsData] = await Promise.all([
             // 1. Google Search (+ PAA)
-            fetch(`https://www.searchapi.io/api/v1/search?engine=google&q=${encodeURIComponent(primaryQuery)}&gl=kr&hl=ko&api_key=${SEARCHAPI_API_KEY}`)
-                .then(r => r.json()).catch(() => ({})),
+            safeFetch(`https://www.searchapi.io/api/v1/search?engine=google&q=${encodeURIComponent(primaryQuery)}&gl=kr&hl=ko&api_key=${SEARCHAPI_API_KEY}`),
             // 2. Google Autocomplete
-            fetch(`https://www.searchapi.io/api/v1/search?engine=google_autocomplete&q=${encodeURIComponent(secondaryQuery)}&gl=kr&hl=ko&api_key=${SEARCHAPI_API_KEY}`)
-                .then(r => r.json()).catch(() => ({})),
+            safeFetch(`https://www.searchapi.io/api/v1/search?engine=google_autocomplete&q=${encodeURIComponent(secondaryQuery)}&gl=kr&hl=ko&api_key=${SEARCHAPI_API_KEY}`),
             // 3. YouTube
-            fetch(`https://www.searchapi.io/api/v1/search?engine=youtube&q=${encodeURIComponent(primaryQuery + " 건강")}&gl=kr&hl=ko&api_key=${SEARCHAPI_API_KEY}`)
-                .then(r => r.json()).catch(() => ({})),
+            safeFetch(`https://www.searchapi.io/api/v1/search?engine=youtube&q=${encodeURIComponent(primaryQuery + " 건강")}&gl=kr&hl=ko&api_key=${SEARCHAPI_API_KEY}`),
             // 4. Google News
-            fetch(`https://www.searchapi.io/api/v1/search?engine=google_news&q=${encodeURIComponent("건강 영양제 의약품 " + primaryQuery)}&gl=kr&hl=ko&time_period=last_week&api_key=${SEARCHAPI_API_KEY}`)
-                .then(r => r.json()).catch(() => ({}))
+            safeFetch(`https://www.searchapi.io/api/v1/search?engine=google_news&q=${encodeURIComponent("건강 영양제 의약품 " + primaryQuery)}&gl=kr&hl=ko&time_period=last_week&api_key=${SEARCHAPI_API_KEY}`)
         ]);
 
         const organicResults = (googleData.organic_results || []).slice(0, 5).map((r: any) => `- ${r.title}: ${r.snippet}`).join('\n');
@@ -325,12 +326,15 @@ async function generateSniperStrategy(category: string, researchData: string, pi
     }
     `;
 
+    const seeds = CATEGORY_SEED_QUERIES[category] || [category];
+    const fallbackKeyword = seeds[Math.floor(Math.random() * seeds.length)] + ` ${Date.now()}`;
+
     return await callGeminiJSON<SeoStrategy>(
         `Health Content Strategy Director. JSON output only.\n\n${prompt}`,
         undefined,
         {
             koreanTitle: `${category} 건강 가이드`,
-            mainKeyword: category,
+            mainKeyword: fallbackKeyword,
             secondaryKeywords: ["건강", "증상"],
             searchIntent: "Informational",
             category: category,
@@ -419,12 +423,14 @@ async function main() {
     let strategy: SeoStrategy | null = null;
     for (let i = 0; i < 3; i++) {
         const candidate = await generateSniperStrategy(targetCategory, researchData, pillarSlug, existingKeywords);
+        console.log(`  🔄 Attempt ${i + 1}: keyword="${candidate.mainKeyword}"`);
         if (!checkKeywordOverlap(candidate.mainKeyword, keywordDB)) {
             strategy = candidate;
             break;
         }
+        console.log(`  ⚠️ Keyword overlap detected, retrying...`);
     }
-    if (!strategy) throw new Error("Strategy generation failed.");
+    if (!strategy) throw new Error("Strategy generation failed. All 3 keyword candidates overlapped with existing DB.");
 
     console.log(`🎯 Strategy: ${strategy.koreanTitle}`);
 
