@@ -690,5 +690,11 @@
     "slug": "medicine-instructions",
     "category": "pharmacy-guide",
     "createdAt": "2026-03-21T13:28:01.283Z"
+  },
+  {
+    "mainKeyword": "프로바이오틱스 부작용",
+    "slug": "probiotics-side-effects",
+    "category": "supplements",
+    "createdAt": "2026-03-21T23:48:49.947Z"
   }
 ]
