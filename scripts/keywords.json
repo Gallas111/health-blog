@@ -744,5 +744,11 @@
     "slug": "sudden-dizziness",
     "category": "symptoms",
     "createdAt": "2026-03-23T10:12:35.350Z"
+  },
+  {
+    "mainKeyword": "아연 부족 증상",
+    "slug": "zinc-deficiency-symptoms",
+    "category": "supplements",
+    "createdAt": "2026-03-23T12:00:00.000Z"
   }
 ]
