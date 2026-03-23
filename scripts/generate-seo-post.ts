@@ -298,7 +298,7 @@ async function generateSniperStrategy(category: string, researchData: string, pi
     const prompt = `
     Act as a "Health Content Strategy Bot" — 건강 블로그 SEO 전략가.
     Context: ${researchData}
-    Avoid: ${JSON.stringify(existingKeywords.slice(-20))}
+    Avoid (these keywords already exist — NEVER use any of these): ${JSON.stringify(existingKeywords.slice(-80))}
 
     100-Point Scoring Rule: Pick the highest ROI health-related long-tail topic.
 
@@ -421,7 +421,7 @@ async function main() {
     const researchData = await performResearch(targetCategory);
 
     let strategy: SeoStrategy | null = null;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 7; i++) {
         const candidate = await generateSniperStrategy(targetCategory, researchData, pillarSlug, existingKeywords);
         console.log(`  🔄 Attempt ${i + 1}: keyword="${candidate.mainKeyword}"`);
         if (!checkKeywordOverlap(candidate.mainKeyword, keywordDB)) {
@@ -429,8 +429,9 @@ async function main() {
             break;
         }
         console.log(`  ⚠️ Keyword overlap detected, retrying...`);
+        existingKeywords.push(candidate.mainKeyword); // 중복된 키워드도 피하도록 추가
     }
-    if (!strategy) throw new Error("Strategy generation failed. All 3 keyword candidates overlapped with existing DB.");
+    if (!strategy) throw new Error("Strategy generation failed. All 7 keyword candidates overlapped with existing DB.");
 
     console.log(`🎯 Strategy: ${strategy.koreanTitle}`);
 
