@@ -13,6 +13,7 @@ dotenv.config();
 const KEY_FILE_PATH = path.join(process.cwd(), 'google-credentials.json');
 const GA_PROPERTY_ID = process.env.GA_PROPERTY_ID;
 const GSC_SITE_URL = process.env.GSC_SITE_URL;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
 const CF_API_TOKEN = process.env.CF_API_TOKEN;
 const EMAIL_USER = process.env.EMAIL_USER;
@@ -109,9 +110,9 @@ async function fetchAnalyticsData(authClient: any) {
  * 4. Focused Gemini 인사이트 도출
  */
 async function generateFocusedInsights(gscData: any[], gaData: any[]) {
-    if (!CF_ACCOUNT_ID || !CF_API_TOKEN) throw new Error('환경변수 CF_ACCOUNT_ID 및 CF_API_TOKEN이 설정되지 않았습니다.');
+    if (!GEMINI_API_KEY && (!CF_ACCOUNT_ID || !CF_API_TOKEN)) throw new Error('환경변수 GEMINI_API_KEY 또는 (CF_ACCOUNT_ID 및 CF_API_TOKEN)이 설정되지 않았습니다.');
     const CF_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
-    const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/${CF_MODEL}`;
+    const cfUrl = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/${CF_MODEL}`;
 
     const prompt = `
 당신은 '오늘도 건강(wellnesstodays.com)' 건강 블로그 전담 SEO 및 수익형 블로그 컨설턴트입니다.
@@ -135,7 +136,29 @@ ${JSON.stringify(gaData.slice(0, 20), null, 2)}
 톤앤매너는 전문적이면서도 응원하는 분위기로 작성해주시고, 이메일로 읽기 좋게 마크다운 형식을 잘 활용해주세요.
 `;
 
-    const response = await fetch(url, {
+    // 1st: Try Gemini free tier
+    if (GEMINI_API_KEY) {
+        try {
+            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const geminiResp = await fetch(geminiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+            });
+            if (geminiResp.ok) {
+                const geminiData = await geminiResp.json() as any;
+                return geminiData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+            }
+            if (geminiResp.status === 429) {
+                console.warn('⚡ Gemini 한도 초과 → CF Workers AI로 전환');
+            }
+        } catch (err: any) {
+            console.warn(`⚠️ Gemini 실패 → CF Workers AI로 전환: ${err.message}`);
+        }
+    }
+
+    // 2nd: CF Workers AI fallback
+    const response = await fetch(cfUrl, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${CF_API_TOKEN}`,

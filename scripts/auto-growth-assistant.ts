@@ -14,6 +14,7 @@ dotenv.config();
 const KEY_FILE_PATH = path.join(process.cwd(), 'google-credentials.json');
 const GA_PROPERTY_ID = process.env.GA_PROPERTY_ID;
 const GSC_SITE_URL = process.env.GSC_SITE_URL;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
 const CF_API_TOKEN = process.env.CF_API_TOKEN;
 
@@ -105,11 +106,11 @@ async function fetchAnalyticsData(authClient: any) {
  * 4. Cloudflare Workers AI로 인사이트 및 리포트 도출
  */
 async function generateInsightsWithGemini(gscData: any[], gaData: any[]) {
-    console.log('🧠 Cloudflare Workers AI로 트래픽 분석 및 성장 리포트를 작성 중입니다...');
-    if (!CF_ACCOUNT_ID || !CF_API_TOKEN) throw new Error('환경변수 CF_ACCOUNT_ID 또는 CF_API_TOKEN이 설정되지 않았습니다.');
+    console.log('🧠 AI로 트래픽 분석 및 성장 리포트를 작성 중입니다...');
+    if (!GEMINI_API_KEY && (!CF_ACCOUNT_ID || !CF_API_TOKEN)) throw new Error('환경변수 GEMINI_API_KEY 또는 (CF_ACCOUNT_ID 및 CF_API_TOKEN)이 설정되지 않았습니다.');
 
     const CF_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
-    const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/${CF_MODEL}`;
+    const cfUrl = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/${CF_MODEL}`;
 
     const prompt = `
 당신은 최고의 SEO 전문가이자 수익형 블로그 성장 컨설턴트 '자동성장 도우미'입니다.
@@ -142,7 +143,29 @@ ${JSON.stringify(gaData, null, 2)}
 섹션 구분은 ## 또는 ### 마크다운 헤더를 사용하고, 중요 포인트는 **강조**표시를 적절히 사용해주세요.
 `;
 
-    const response = await fetch(url, {
+    // 1st: Try Gemini free tier
+    if (GEMINI_API_KEY) {
+        try {
+            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const geminiResp = await fetch(geminiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+            });
+            if (geminiResp.ok) {
+                const geminiData = await geminiResp.json() as any;
+                return geminiData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+            }
+            if (geminiResp.status === 429) {
+                console.warn('⚡ Gemini 한도 초과 → CF Workers AI로 전환');
+            }
+        } catch (err: any) {
+            console.warn(`⚠️ Gemini 실패 → CF Workers AI로 전환: ${err.message}`);
+        }
+    }
+
+    // 2nd: CF Workers AI fallback
+    const response = await fetch(cfUrl, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${CF_API_TOKEN}`,
