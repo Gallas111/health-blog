@@ -1,5 +1,5 @@
 import { google } from 'googleapis';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
@@ -14,7 +14,8 @@ dotenv.config();
 const KEY_FILE_PATH = path.join(process.cwd(), 'google-credentials.json');
 const GA_PROPERTY_ID = process.env.GA_PROPERTY_ID;
 const GSC_SITE_URL = process.env.GSC_SITE_URL;
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
+const CF_API_TOKEN = process.env.CF_API_TOKEN;
 
 // 이메일 설정
 const EMAIL_USER = process.env.EMAIL_USER;
@@ -101,14 +102,14 @@ async function fetchAnalyticsData(authClient: any) {
 }
 
 /**
- * 4. Gemini API로 인사이트 및 리포트 도출
+ * 4. Cloudflare Workers AI로 인사이트 및 리포트 도출
  */
 async function generateInsightsWithGemini(gscData: any[], gaData: any[]) {
-    console.log('🧠 Gemini API로 트래픽 분석 및 성장 리포트를 작성 중입니다...');
-    if (!GEMINI_API_KEY) throw new Error('환경변수 GEMINI_API_KEY가 설정되지 않았습니다.');
+    console.log('🧠 Cloudflare Workers AI로 트래픽 분석 및 성장 리포트를 작성 중입니다...');
+    if (!CF_ACCOUNT_ID || !CF_API_TOKEN) throw new Error('환경변수 CF_ACCOUNT_ID 또는 CF_API_TOKEN이 설정되지 않았습니다.');
 
-    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const CF_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
+    const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/${CF_MODEL}`;
 
     const prompt = `
 당신은 최고의 SEO 전문가이자 수익형 블로그 성장 컨설턴트 '자동성장 도우미'입니다.
@@ -141,8 +142,20 @@ ${JSON.stringify(gaData, null, 2)}
 섹션 구분은 ## 또는 ### 마크다운 헤더를 사용하고, 중요 포인트는 **강조**표시를 적절히 사용해주세요.
 `;
 
-    const result = await model.generateContent(prompt);
-    return result.response.text();
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${CF_API_TOKEN}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: 8192,
+        }),
+    });
+    if (!response.ok) throw new Error(`CF Workers AI error (${response.status}): ${await response.text()}`);
+    const data = await response.json();
+    return (data as any).result?.response || '';
 }
 
 /**

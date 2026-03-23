@@ -25,7 +25,11 @@
       "Bash(grep:*)",
       "Bash(python3:*)",
       "Bash(for f:*)",
-      "Bash(do echo:*)"
+      "Bash(do echo:*)",
+      "Bash(npx tsx:*)",
+      "Bash(gh run:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh workflow:*)"
     ]
   }
 }

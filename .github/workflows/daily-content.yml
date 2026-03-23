@@ -53,14 +53,16 @@ jobs:
 
       - name: Trend Hunting (Bot)
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           SEARCHAPI_API_KEY: ${{ secrets.SEARCHAPI_API_KEY }}
         run: npx tsx scripts/trend-hunter.ts
 
       - name: Generate Health Article
         id: generate
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           SEARCHAPI_API_KEY: ${{ secrets.SEARCHAPI_API_KEY }}
           HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -68,7 +70,8 @@ jobs:
 
       - name: Content Refinement (Bot)
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: npx tsx scripts/content-refiner.ts
 
       - name: Validate and Fix Images (Bot)
