@@ -1,17 +1,17 @@
 name: Daily Health Article Generation
 
 on:
-  schedule:
-    # KST 08:30 (UTC 23:30) - Morning Commute
-    - cron: '30 23 * * *'
-    # KST 11:30 (UTC 02:30) - Pre-Lunch
-    - cron: '30 2 * * *'
-    # KST 14:30 (UTC 05:30) - Mid-Afternoon
-    - cron: '30 5 * * *'
-    # KST 17:30 (UTC 08:30) - Pre-Evening
-    - cron: '30 8 * * *'
-    # KST 21:30 (UTC 12:30) - Night
-    - cron: '30 12 * * *'
+  # schedule:
+  #   # KST 08:30 (UTC 23:30) - Morning Commute
+  #   - cron: '30 23 * * *'
+  #   # KST 11:30 (UTC 02:30) - Pre-Lunch
+  #   - cron: '30 2 * * *'
+  #   # KST 14:30 (UTC 05:30) - Mid-Afternoon
+  #   - cron: '30 5 * * *'
+  #   # KST 17:30 (UTC 08:30) - Pre-Evening
+  #   - cron: '30 8 * * *'
+  #   # KST 21:30 (UTC 12:30) - Night
+  #   - cron: '30 12 * * *'
   workflow_dispatch:
 
 jobs:
