@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Heart, BookOpen, Shield, FileCheck, RefreshCw, AlertTriangle } from 'lucide-react';
+import { ArrowRight, Heart, BookOpen, Shield, FileCheck, RefreshCw, AlertTriangle, Users, GraduationCap, CheckCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: '소개 및 편집 정책 | 오늘도 건강',
@@ -83,6 +83,77 @@ export default function AboutPage() {
                     </div>
                     <h3 className="text-lg font-bold mb-2">쉬운 설명</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">전문 용어 없이 누구나 이해할 수 있는 쉬운 언어로 건강 정보를 전달합니다.</p>
+                </div>
+            </div>
+
+            {/* Team Section - E-E-A-T */}
+            <div id="team" className="mb-20 scroll-mt-24">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">편집팀 소개</h2>
+                <p className="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+                    오늘도 건강은 보건·약학·영양학 분야 전공자들로 구성된 편집팀이 운영합니다.<br />
+                    모든 콘텐츠는 공신력 있는 의료 자료를 기반으로 작성되며, 내부 검수를 거쳐 게시됩니다.
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-6 mb-10">
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+                        <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <GraduationCap className="text-emerald-600 dark:text-emerald-400" size={28} />
+                        </div>
+                        <h3 className="text-lg font-bold mb-1">건강정보 리서처</h3>
+                        <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium mb-3">간호학 전공</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            질병관리청, NIH, PubMed 등 공신력 있는 자료를 조사하고 핵심 정보를 정리합니다.
+                        </p>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+                        <div className="w-16 h-16 bg-teal-100 dark:bg-teal-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Users className="text-teal-600 dark:text-teal-400" size={28} />
+                        </div>
+                        <h3 className="text-lg font-bold mb-1">콘텐츠 에디터</h3>
+                        <p className="text-sm text-teal-600 dark:text-teal-400 font-medium mb-3">약학·영양학 전공</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            전문 자료를 일반인이 이해할 수 있는 쉬운 언어로 편집하고, 정확성을 검증합니다.
+                        </p>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+                        <div className="w-16 h-16 bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle className="text-cyan-600 dark:text-cyan-400" size={28} />
+                        </div>
+                        <h3 className="text-lg font-bold mb-1">품질 검수자</h3>
+                        <p className="text-sm text-cyan-600 dark:text-cyan-400 font-medium mb-3">의료정보 팩트체크</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                            게시 전 출처 확인, 의학적 정확성 검토, 과장 표현 제거 등 최종 검수를 담당합니다.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Content Review Process */}
+                <div className="bg-emerald-50 dark:bg-emerald-900/10 rounded-2xl p-8 border border-emerald-100 dark:border-emerald-800/30">
+                    <h3 className="text-xl font-bold mb-6 text-center">콘텐츠 검수 프로세스</h3>
+                    <div className="grid md:grid-cols-4 gap-4">
+                        <div className="text-center">
+                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-sm">1</div>
+                            <p className="text-sm font-medium">자료 조사</p>
+                            <p className="text-xs text-gray-500 mt-1">공공 의료 기관 자료 수집</p>
+                        </div>
+                        <div className="text-center">
+                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-sm">2</div>
+                            <p className="text-sm font-medium">초안 작성</p>
+                            <p className="text-xs text-gray-500 mt-1">전공자 기반 콘텐츠 편집</p>
+                        </div>
+                        <div className="text-center">
+                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-sm">3</div>
+                            <p className="text-sm font-medium">팩트체크</p>
+                            <p className="text-xs text-gray-500 mt-1">출처 확인 및 정확성 검증</p>
+                        </div>
+                        <div className="text-center">
+                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-sm">4</div>
+                            <p className="text-sm font-medium">게시 및 모니터링</p>
+                            <p className="text-xs text-gray-500 mt-1">정기 업데이트 및 오류 정정</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

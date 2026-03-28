@@ -112,10 +112,16 @@ export default async function BlogPost({ params }: PageProps) {
         image: post.frontmatter.image ? [post.frontmatter.image] : [],
         datePublished: new Date(post.frontmatter.date).toISOString(),
         dateModified: new Date(post.frontmatter.date).toISOString(),
-        author: { "@type": "Person", name: "오늘도 건강", url: "https://www.wellnesstodays.com" },
+        author: {
+            "@type": "Organization",
+            name: "오늘도 건강 편집팀",
+            url: "https://www.wellnesstodays.com/about#team",
+            description: "간호학·약학·영양학 전공 편집진",
+        },
         publisher: {
             "@type": "Organization",
             name: "오늘도 건강",
+            url: "https://www.wellnesstodays.com",
             logo: { "@type": "ImageObject", url: "https://www.wellnesstodays.com/icon.svg" },
         },
         mainEntityOfPage: {

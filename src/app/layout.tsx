@@ -120,18 +120,36 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "오늘도 건강",
-              url: "https://www.wellnesstodays.com",
-              description: "증상별 건강정보, 영양제 효능, 민간요법, 생활건강 상식 — 믿을 수 있는 건강 정보",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: "https://www.wellnesstodays.com/search?q={search_term_string}",
-                "query-input": "required name=search_term_string",
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "오늘도 건강",
+                url: "https://www.wellnesstodays.com",
+                description: "증상별 건강정보, 영양제 효능, 민간요법, 생활건강 상식 — 믿을 수 있는 건강 정보",
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target: "https://www.wellnesstodays.com/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string",
+                },
               },
-            }),
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "오늘도 건강",
+                url: "https://www.wellnesstodays.com",
+                logo: "https://www.wellnesstodays.com/icon.svg",
+                description: "간호학·약학·영양학 전공 편집팀이 공공 의료 자료를 기반으로 운영하는 생활건강 정보 사이트",
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  email: "contact@wellnesstodays.com",
+                  contactType: "customer service",
+                  availableLanguage: "Korean",
+                },
+                sameAs: ["https://www.yakchatja.com"],
+                publishingPrinciples: "https://www.wellnesstodays.com/about#editorial-policy",
+              },
+            ]),
           }}
         />
         <Header posts={searchPosts} />
