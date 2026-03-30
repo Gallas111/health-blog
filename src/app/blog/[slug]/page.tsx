@@ -106,7 +106,7 @@ export default async function BlogPost({ params }: PageProps) {
     // [SEO Logic] Article Schema
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         headline: post.frontmatter.title,
         description: post.frontmatter.description,
         image: post.frontmatter.image ? [post.frontmatter.image] : [],
@@ -127,6 +127,15 @@ export default async function BlogPost({ params }: PageProps) {
         mainEntityOfPage: {
             "@type": "WebPage",
             "@id": `https://www.wellnesstodays.com/blog/${post.slug}`,
+        },
+        about: {
+            "@type": "MedicalCondition",
+            name: "건강 정보",
+        },
+        lastReviewed: new Date(post.frontmatter.date).toISOString(),
+        reviewedBy: {
+            "@type": "Organization",
+            name: "오늘도 건강 편집팀",
         },
     };
 
