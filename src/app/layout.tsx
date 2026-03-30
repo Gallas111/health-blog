@@ -68,6 +68,8 @@ export const metadata: Metadata = {
     other: {
       "naver-site-verification": "95f312438e776c659f9d20e392d9b7f3fd68090e",
       "google-adsense-account": "ca-pub-1022869499967960",
+      // TODO: Add Bing Webmaster verification code
+      // "msvalidate.01": "YOUR_BING_VERIFICATION_CODE",
     },
   },
   icons: {
