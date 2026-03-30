@@ -35,16 +35,20 @@ const today = new Date().toISOString().split("T")[0];
 let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
 for (const page of staticPages) {
-    xml += `  <url><loc>${baseUrl}${page}</loc><lastmod>${today}</lastmod></url>\n`;
+    const isHome = page === "";
+    const isBlog = page === "/blog";
+    const priority = isHome ? "1.0" : isBlog ? "0.8" : "0.3";
+    const changefreq = isHome ? "daily" : isBlog ? "daily" : "yearly";
+    xml += `  <url><loc>${baseUrl}${page}</loc><lastmod>${today}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>\n`;
 }
 for (const cat of categories) {
-    xml += `  <url><loc>${baseUrl}/blog/category/${cat}</loc><lastmod>${today}</lastmod></url>\n`;
+    xml += `  <url><loc>${baseUrl}/blog/category/${cat}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>\n`;
 }
 for (const post of posts) {
     const d = post.date.replace(/\.\s*/g, "-").replace(/-$/, "").trim();
     const date = new Date(d);
     const lastmod = isNaN(date.getTime()) ? today : date.toISOString().split("T")[0];
-    xml += `  <url><loc>${baseUrl}/blog/${post.slug}</loc><lastmod>${lastmod}</lastmod></url>\n`;
+    xml += `  <url><loc>${baseUrl}/blog/${post.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
 }
 
 xml += `</urlset>\n`;
