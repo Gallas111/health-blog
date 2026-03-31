@@ -990,5 +990,35 @@
     "slug": "eyelid-twitching-causes-5-solutions",
     "category": "symptoms",
     "createdAt": "2026-03-30T00:04:00.000Z"
+  },
+  {
+    "mainKeyword": "봄철 황사 미세먼지 건강 관리",
+    "slug": "spring-dust-health-care-guide",
+    "category": "daily-health",
+    "createdAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "mainKeyword": "소화불량 해결 민간요법 7가지",
+    "slug": "indigestion-home-remedies-7-tips",
+    "category": "home-remedies",
+    "createdAt": "2026-03-31T00:01:00.000Z"
+  },
+  {
+    "mainKeyword": "마그네슘 효능 복용법 가이드",
+    "slug": "magnesium-benefits-dosage-guide",
+    "category": "supplements",
+    "createdAt": "2026-03-31T00:02:00.000Z"
+  },
+  {
+    "mainKeyword": "약국 근육통 파스 종류 비교",
+    "slug": "pharmacy-muscle-pain-patch-comparison",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-03-31T00:03:00.000Z"
+  },
+  {
+    "mainKeyword": "손발 저림 원인 5가지",
+    "slug": "hand-foot-numbness-causes-5",
+    "category": "symptoms",
+    "createdAt": "2026-03-31T00:04:00.000Z"
   }
 ]
