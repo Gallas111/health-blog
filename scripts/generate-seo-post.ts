@@ -440,7 +440,7 @@ async function main() {
 
     const internalLinks = [allPosts.find(p => p.slug === pillarSlug), ...allPosts.filter(p => p.category === targetCategory).slice(0, 5)].filter((p): p is BlogPost => !!p);
 
-    const thumbnailPath = await generateThumbnail(strategy.koreanTitle, `${slug}-thumb.png`, targetCategory, strategy.writingGoal || '');
+    const thumbnailPath = await generateThumbnail(strategy.koreanTitle, `${slug}-thumb.webp`, targetCategory, strategy.writingGoal || '');
 
     console.log("✍️  Writing Content...");
     let markdownBody = await generateContent(strategy, undefined, internalLinks);
@@ -457,7 +457,7 @@ async function main() {
             const sectionCtx = extractSectionContext(markdownBody, matchIndex, matches[i][0]);
             console.log(`   📌 New post body ${i + 1} — Section: "${sectionCtx.sectionHeading}" [${sectionCtx.sectionType}]`);
 
-            const filepath = path.join(PUBLIC_IMAGE_DIR, `${slug}-body-${i + 1}.png`);
+            const filepath = path.join(PUBLIC_IMAGE_DIR, `${slug}-body-${i + 1}.webp`);
             const result = await generateSmartImage(
                 prompts[i] || matches[i][1],
                 filepath,
@@ -469,7 +469,7 @@ async function main() {
                 sectionCtx
             );
             if (result) {
-                const imgPath = `/images/posts/${slug}-body-${i + 1}.png`;
+                const imgPath = `/images/posts/${slug}-body-${i + 1}.webp`;
                 markdownBody = markdownBody.replace(matches[i][0], `![${matches[i][1]}](${imgPath})`);
             } else {
                 console.warn(`⚠️ Warning: Failed to generate or save image for prompt: ${prompts[i] || matches[i][1]}. Using text fallback.`);

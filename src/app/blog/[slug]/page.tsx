@@ -111,7 +111,7 @@ export default async function BlogPost({ params }: PageProps) {
         description: post.frontmatter.description,
         image: post.frontmatter.image ? [post.frontmatter.image] : [],
         datePublished: new Date(post.frontmatter.date).toISOString(),
-        dateModified: new Date(post.frontmatter.date).toISOString(),
+        dateModified: post.lastModified || new Date(post.frontmatter.date).toISOString(),
         author: {
             "@type": "Organization",
             name: "오늘도 건강 편집팀",
@@ -132,7 +132,7 @@ export default async function BlogPost({ params }: PageProps) {
             "@type": "MedicalCondition",
             name: "건강 정보",
         },
-        lastReviewed: new Date(post.frontmatter.date).toISOString(),
+        lastReviewed: post.lastModified || new Date(post.frontmatter.date).toISOString(),
         reviewedBy: {
             "@type": "Organization",
             name: "오늘도 건강 편집팀",

@@ -19,6 +19,7 @@ export interface MDXPost {
         [key: string]: any;
     };
     readingTime?: string;
+    lastModified?: string;
 }
 
 const contentDirectory = path.join(process.cwd(), "content");
@@ -48,6 +49,7 @@ export function getAllPosts(): MDXPost[] {
                     const fileContent = fs.readFileSync(filePath, "utf8");
                     const { data, content } = matter(fileContent);
                     const slug = file.replace(/\.mdx$/, "");
+                    const lastModified = fs.statSync(filePath).mtime.toISOString();
 
                     allPosts.push({
                         slug,
@@ -55,6 +57,7 @@ export function getAllPosts(): MDXPost[] {
                         content,
                         frontmatter: data as MDXPost["frontmatter"],
                         readingTime: calculateReadingTime(content),
+                        lastModified,
                     });
                 }
             });
@@ -80,12 +83,14 @@ export function getPostBySlug(slug: string): MDXPost | null {
             if (fs.existsSync(filePath)) {
                 const fileContent = fs.readFileSync(filePath, "utf8");
                 const { data, content } = matter(fileContent);
+                const lastModified = fs.statSync(filePath).mtime.toISOString();
                 foundPost = {
                     slug,
                     category,
                     content,
                     frontmatter: data as MDXPost["frontmatter"],
                     readingTime: calculateReadingTime(content),
+                    lastModified,
                 };
                 break;
             }
