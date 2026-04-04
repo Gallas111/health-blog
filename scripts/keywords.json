@@ -1080,5 +1080,35 @@
     "slug": "headache-causes-and-solutions-guide",
     "category": "symptoms",
     "createdAt": "2026-04-02T00:04:00.000Z"
+  },
+  {
+    "mainKeyword": "다이어트 식단 추천",
+    "slug": "diet-meal-plan-recommendation-guide",
+    "category": "daily-health",
+    "createdAt": "2026-04-04T00:00:00.000Z"
+  },
+  {
+    "mainKeyword": "소화불량 해결 방법 7가지",
+    "slug": "indigestion-relief-home-remedies-guide",
+    "category": "home-remedies",
+    "createdAt": "2026-04-04T00:01:00.000Z"
+  },
+  {
+    "mainKeyword": "콜레스테롤 낮추는 음식 10가지",
+    "slug": "cholesterol-lowering-foods-guide",
+    "category": "supplements",
+    "createdAt": "2026-04-04T00:02:00.000Z"
+  },
+  {
+    "mainKeyword": "자외선 차단제 추천 2026",
+    "slug": "sunscreen-recommendation-spring-guide",
+    "category": "pharmacy-guide",
+    "createdAt": "2026-04-04T00:03:00.000Z"
+  },
+  {
+    "mainKeyword": "변비 해결법 7가지",
+    "slug": "constipation-relief-methods-guide",
+    "category": "symptoms",
+    "createdAt": "2026-04-04T00:04:00.000Z"
   }
 ]
