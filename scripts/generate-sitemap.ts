@@ -20,7 +20,7 @@ function getAllSlugs(): { slug: string; date: string }[] {
             if (data.noindex) continue;
             results.push({
                 slug: file.replace(/\.mdx$/, ""),
-                date: data.date || new Date().toISOString(),
+                date: data.dateModified || data.updated || data.date || new Date().toISOString(),
             });
         }
     }
