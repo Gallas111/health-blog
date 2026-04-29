@@ -139,7 +139,7 @@ export default function PrivacyPage() {
                         <li><strong>동의 철회권:</strong> 개인정보 수집·이용에 대한 동의를 철회할 수 있습니다.</li>
                     </ul>
                     <p className="mt-2">
-                        위 권리 행사는 이메일(contact@wellnesstodays.com)을 통해 요청하실 수 있으며,
+                        위 권리 행사는 이메일(kingyw102@gmail.com)을 통해 요청하실 수 있으며,
                         접수 후 10일 이내에 처리합니다.
                     </p>
                 </section>
@@ -178,7 +178,7 @@ export default function PrivacyPage() {
                         <ul className="space-y-1">
                             <li><strong>사이트명:</strong> 오늘도 건강</li>
                             <li><strong>URL:</strong> www.wellnesstodays.com</li>
-                            <li><strong>이메일:</strong> contact@wellnesstodays.com</li>
+                            <li><strong>이메일:</strong> kingyw102@gmail.com</li>
                         </ul>
                     </div>
                     <p className="mt-3">

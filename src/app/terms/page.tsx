@@ -127,7 +127,7 @@ export default function TermsPage() {
                     <ul className="list-disc pl-5 mt-2 space-y-1">
                         <li>사이트명: 오늘도 건강</li>
                         <li>URL: www.wellnesstodays.com</li>
-                        <li>이메일: contact@wellnesstodays.com</li>
+                        <li>이메일: kingyw102@gmail.com</li>
                     </ul>
                 </section>
             </div>
