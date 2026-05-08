@@ -36,7 +36,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: fullTitle,
         description: `${categoryInfo.description} 의료 전문가 검수 ${posts.length}개 글, 매주 업데이트.`,
         keywords: [categoryInfo.title, ...categoryInfo.features, "건강정보", "오늘도 건강"],
-        robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+        robots: posts.length < 5
+            ? { index: false, follow: true }
+            : { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
         alternates: {
             canonical: `https://www.wellnesstodays.com/blog/category/${slug}`,
         },
