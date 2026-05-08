@@ -14,8 +14,6 @@ import Breadcrumb from "@/components/Breadcrumb";
 import PharmacyBanner from "@/components/PharmacyBanner";
 import PharmacyBannerCompact from "@/components/PharmacyBannerCompact";
 import Disclaimer from "@/components/Disclaimer";
-import InArticleAd from "@/components/InArticleAd";
-import SidebarAd from "@/components/SidebarAd";
 import styles from "./page.module.css";
 import { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -224,8 +222,6 @@ export default async function BlogPost({ params }: PageProps) {
 
                         <PharmacyBannerCompact />
 
-                        <InArticleAd slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP || ""} />
-
                         <div className={styles.content}>
                             <MDXRemote
                                 source={post.content}
@@ -238,8 +234,6 @@ export default async function BlogPost({ params }: PageProps) {
                                 }}
                             />
                         </div>
-
-                        <InArticleAd slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM || ""} />
 
                         {/* 약국찾자 CTA 배너 */}
                         <PharmacyBanner />
@@ -298,7 +292,6 @@ export default async function BlogPost({ params }: PageProps) {
 
                     <aside className={styles.sidebar}>
                         <TableOfContents headings={headings} />
-                        <SidebarAd slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR || ""} />
                     </aside>
                 </div>
             </div>
