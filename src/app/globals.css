@@ -220,3 +220,42 @@ a:hover {
     font-size: 1.75rem;
   }
 }
+
+/* === Mobile optimizations (2026-05-08) === */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.prose p, .prose li, .prose h1, .prose h2, .prose h3, .prose h4 {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.prose h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
+.prose h2 { font-size: clamp(1.25rem, 3.5vw, 1.5rem); }
+.prose h3 { font-size: clamp(1.1rem, 3vw, 1.25rem); }
+.prose h4 { font-size: clamp(1rem, 2.5vw, 1.1rem); }
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose table tbody, .prose table thead {
+  width: 100%;
+}
+
+.prose img, .prose video, .prose iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .prose th, .prose td {
+    padding: 0.4em 0.6em;
+    font-size: 0.9em;
+  }
+}
