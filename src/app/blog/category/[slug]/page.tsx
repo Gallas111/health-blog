@@ -21,14 +21,22 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     const categoryInfo = categoryDescriptions[slug];
+    const baseCategory = getCategoryBySlug(slug);
 
-    if (!categoryInfo) {
+    if (!categoryInfo || !baseCategory) {
         return { title: '오늘도 건강 블로그' };
     }
 
+    const posts = getPostsByCategory(baseCategory.folderName);
+    const featuresKeywords = categoryInfo.features.slice(0, 3).join(' · ');
+    const fullTitle = `${categoryInfo.title} (${posts.length}개 가이드) — ${featuresKeywords} | 오늘도 건강`;
+    const ogImage = "https://www.wellnesstodays.com/og-image.png";
+
     return {
-        title: `${categoryInfo.title} | 오늘도 건강`,
-        description: categoryInfo.description,
+        title: fullTitle,
+        description: `${categoryInfo.description} 의료 전문가 검수 ${posts.length}개 글, 매주 업데이트.`,
+        keywords: [categoryInfo.title, ...categoryInfo.features, "건강정보", "오늘도 건강"],
+        robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
         alternates: {
             canonical: `https://www.wellnesstodays.com/blog/category/${slug}`,
         },
@@ -37,6 +45,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             description: categoryInfo.description,
             type: 'website',
             url: `https://www.wellnesstodays.com/blog/category/${slug}`,
+            siteName: "오늘도 건강",
+            locale: "ko_KR",
+            images: [{ url: ogImage, width: 1200, height: 630, alt: categoryInfo.title }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: categoryInfo.title,
+            description: categoryInfo.description,
+            images: [ogImage],
         },
     };
 }
@@ -52,6 +69,7 @@ export default async function CategoryPage({ params }: PageProps) {
     }
 
     const posts = getPostsByCategory(baseCategory.folderName);
+    const latestDate = posts.length > 0 ? posts[0].frontmatter.date : new Date().toISOString();
 
     // Schema.org CollectionPage
     const jsonLd = {
@@ -60,8 +78,16 @@ export default async function CategoryPage({ params }: PageProps) {
         name: richInfo.title,
         description: richInfo.description,
         url: `https://www.wellnesstodays.com/blog/category/${slug}`,
+        inLanguage: "ko-KR",
+        isPartOf: {
+            "@type": "WebSite",
+            name: "오늘도 건강",
+            url: "https://www.wellnesstodays.com",
+        },
+        dateModified: new Date(latestDate).toISOString(),
         mainEntity: {
             '@type': 'ItemList',
+            numberOfItems: posts.length,
             itemListElement: posts.map((post, index) => ({
                 '@type': 'ListItem',
                 position: index + 1,
@@ -71,12 +97,36 @@ export default async function CategoryPage({ params }: PageProps) {
         },
     };
 
+    // Schema.org BreadcrumbList
+    const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "홈", item: "https://www.wellnesstodays.com" },
+            { "@type": "ListItem", position: 2, name: "블로그", item: "https://www.wellnesstodays.com/blog" },
+            { "@type": "ListItem", position: 3, name: richInfo.title, item: `https://www.wellnesstodays.com/blog/category/${slug}` },
+        ],
+    };
+
     return (
         <div className="container mx-auto px-4 py-8">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
+
+            {/* Breadcrumb 시각 — UX + 모바일 색인 도움 */}
+            <nav aria-label="Breadcrumb" className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+                <Link href="/" className="hover:text-emerald-600">홈</Link>
+                <span className="mx-2">/</span>
+                <Link href="/blog" className="hover:text-emerald-600">블로그</Link>
+                <span className="mx-2">/</span>
+                <span className="text-gray-900 dark:text-gray-200">{richInfo.title}</span>
+            </nav>
 
             {/* SEO Hub Header */}
             <header className="mb-12 text-center max-w-3xl mx-auto">
