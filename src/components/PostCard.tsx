@@ -30,7 +30,17 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
                     {image ? (
                         <div className={styles.imageContainer}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={image} alt={title} className={styles.image} />
+                            <img
+                                src={image}
+                                alt=""
+                                className={styles.image}
+                                onError={(e) => {
+                                    const img = e.currentTarget;
+                                    img.style.display = 'none';
+                                    const wrapper = img.parentElement?.parentElement;
+                                    if (wrapper) wrapper.classList.add(styles.imageFallback);
+                                }}
+                            />
                         </div>
                     ) : (
                         <div className={styles.placeholderImage}></div>
