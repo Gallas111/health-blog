@@ -161,8 +161,11 @@ export default async function BlogPost({ params }: PageProps) {
                 <img
                     src={props.src}
                     alt={props.alt || ""}
+                    width={1200}
+                    height={675}
                     className={styles.optimizedImage}
                     loading="lazy"
+                    decoding="async"
                 />
             </span>
         ),

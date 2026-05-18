@@ -33,6 +33,10 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
                             <img
                                 src={image}
                                 alt=""
+                                width={800}
+                                height={450}
+                                loading="lazy"
+                                decoding="async"
                                 className={styles.image}
                                 onError={(e) => {
                                     const img = e.currentTarget;

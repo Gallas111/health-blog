@@ -41,7 +41,15 @@ export default async function PostNavigation({ currentSlug, currentCategory }: P
                                 <div className={styles.relatedImage}>
                                     {post.frontmatter.image ? (
                                         /* eslint-disable-next-line @next/next/no-img-element */
-                                        <img src={post.frontmatter.image} alt={post.frontmatter.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <img
+                                            src={post.frontmatter.image}
+                                            alt={post.frontmatter.title}
+                                            width={800}
+                                            height={450}
+                                            loading="lazy"
+                                            decoding="async"
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        />
                                     ) : (
                                         <div style={{ width: '100%', height: '100%', background: '#eee' }} />
                                     )}
