@@ -24,6 +24,12 @@ import "highlight.js/styles/atom-one-dark.css";
 import Callout from "@/components/Callout";
 import ProsCons from "@/components/ProsCons";
 import KeyTakeaway from "@/components/KeyTakeaway";
+import AdSlot from "@/components/AdSlot";
+
+const AD_SLOT_TOP = process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP || "";
+const AD_SLOT_BOTTOM = process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM || "";
+const AD_SLOT_RELATED = process.env.NEXT_PUBLIC_ADSENSE_SLOT_RELATED || "";
+const AD_SLOT_SIDEBAR = process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR || "";
 import ScrollTracker from "@/components/ScrollTracker";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 import SwipeNavigation from "@/components/SwipeNavigation";
@@ -225,6 +231,13 @@ export default async function BlogPost({ params }: PageProps) {
 
                         <PharmacyBannerCompact />
 
+                        <AdSlot
+                            slot={AD_SLOT_TOP}
+                            layout="in-article"
+                            format="fluid"
+                            label="본문 상단 광고"
+                        />
+
                         <div className={styles.content}>
                             <MDXRemote
                                 source={post.content}
@@ -237,6 +250,13 @@ export default async function BlogPost({ params }: PageProps) {
                                 }}
                             />
                         </div>
+
+                        <AdSlot
+                            slot={AD_SLOT_BOTTOM}
+                            layout="in-article"
+                            format="fluid"
+                            label="본문 하단 광고"
+                        />
 
                         {/* 약국찾자 CTA 배너 */}
                         <PharmacyBanner />
@@ -261,6 +281,12 @@ export default async function BlogPost({ params }: PageProps) {
 
                         <ShareButtons title={post.frontmatter.title} slug={post.slug} />
                         <PostNavigation currentSlug={post.slug} currentCategory={post.category} />
+
+                        <AdSlot
+                            slot={AD_SLOT_RELATED}
+                            format="auto"
+                            label="관련 글 광고"
+                        />
 
                         {/* Enhanced Related Posts Section */}
                         {relatedPosts.length > 0 && (
@@ -295,6 +321,16 @@ export default async function BlogPost({ params }: PageProps) {
 
                     <aside className={styles.sidebar}>
                         <TableOfContents headings={headings} />
+                        {AD_SLOT_SIDEBAR && (
+                            <div style={{ position: "sticky", top: "80px", marginTop: "24px" }}>
+                                <AdSlot
+                                    slot={AD_SLOT_SIDEBAR}
+                                    format="auto"
+                                    minHeight={250}
+                                    label="사이드바 광고"
+                                />
+                            </div>
+                        )}
                     </aside>
                 </div>
             </div>
