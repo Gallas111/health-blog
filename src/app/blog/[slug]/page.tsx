@@ -33,6 +33,11 @@ const AD_SLOT_SIDEBAR = process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR || "";
 import ScrollTracker from "@/components/ScrollTracker";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 import SwipeNavigation from "@/components/SwipeNavigation";
+import imageDims from "@/data/image-dims.json";
+
+// Static body-image dimension map (built by scripts/gen-image-dims.py).
+// Injecting real width/height lets the browser reserve aspect-ratio space → zero CLS.
+const IMG_DIMS = imageDims as Record<string, number[]>;
 
 
 export async function generateStaticParams() {
@@ -161,20 +166,27 @@ export default async function BlogPost({ params }: PageProps) {
 
     // Custom MDX Components for better Performance/SEO
     const mdxComponents = {
-        img: (props: any) => (
-            <span className={styles.imageWrapper}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={props.src}
-                    alt={props.alt || ""}
-                    width={1200}
-                    height={675}
-                    className={styles.optimizedImage}
-                    loading="lazy"
-                    decoding="async"
-                />
-            </span>
-        ),
+        img: (props: any) => {
+            const src = typeof props.src === "string" ? props.src : undefined;
+            // Real dimensions reserve aspect-ratio space → zero body-image CLS.
+            // Fall back to decoded src for any %-encoded (e.g. Korean) filenames.
+            const dims = src
+                ? IMG_DIMS[src] || IMG_DIMS[decodeURIComponent(src)]
+                : undefined;
+            return (
+                <span className={styles.imageWrapper}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src={props.src}
+                        alt={props.alt || ""}
+                        {...(dims ? { width: dims[0], height: dims[1] } : {})}
+                        className={styles.optimizedImage}
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </span>
+            );
+        },
         Callout,
         ProsCons,
         KeyTakeaway,
