@@ -32,26 +32,38 @@ export function calculateReadingTime(content: string): string {
     return `${Math.max(1, minutes)}분`;
 }
 
-// Get all MDX files recursively
-export function getAllPosts(): MDXPost[] {
-    if (!fs.existsSync(contentDirectory)) return [];
+// Build-time cache: 모든 MDX를 한 번만 walk + parse 하고 모든 호출에서 재사용.
+// 캐시 없을 때 페이지당 getAllPosts/getPostBySlug/getPostsByCategory/getRelatedPosts/getAdjacentPosts가
+// 매번 content 트리 전체를 readdir + readFileSync + matter() 재파싱 → 글 수 × 페이지 수의 N² 파싱으로
+// 빌드가 느려짐. (ai-blog / saju-blog _allPostsCache 패턴 미러)
+let _allPostsCache: Map<string, MDXPost> | null = null;
+
+// content 트리를 한 번만 walk 해서 slug → MDXPost 맵을 만든다.
+// readdir 순서를 그대로 유지하고, 같은 slug가 여러 카테고리에 있으면 먼저 만난 것(원래 getPostBySlug break 동작)을 보존.
+function loadAllPosts(): Map<string, MDXPost> {
+    if (_allPostsCache) return _allPostsCache;
+
+    const cache = new Map<string, MDXPost>();
+    if (!fs.existsSync(contentDirectory)) {
+        _allPostsCache = cache;
+        return cache;
+    }
 
     const categories = fs.readdirSync(contentDirectory);
-    const allPosts: MDXPost[] = [];
-
     categories.forEach((category) => {
         const categoryPath = path.join(contentDirectory, category);
         if (fs.statSync(categoryPath).isDirectory()) {
             const files = fs.readdirSync(categoryPath);
             files.forEach((file) => {
                 if (file.endsWith(".mdx")) {
+                    const slug = file.replace(/\.mdx$/, "");
+                    if (cache.has(slug)) return; // first category in readdir order wins
                     const filePath = path.join(categoryPath, file);
                     const fileContent = fs.readFileSync(filePath, "utf8");
                     const { data, content } = matter(fileContent);
-                    const slug = file.replace(/\.mdx$/, "");
                     const lastModified = fs.statSync(filePath).mtime.toISOString();
 
-                    allPosts.push({
+                    cache.set(slug, {
                         slug,
                         category,
                         content,
@@ -64,40 +76,22 @@ export function getAllPosts(): MDXPost[] {
         }
     });
 
-    // Sort posts by date (newest first)
+    _allPostsCache = cache;
+    return cache;
+}
+
+// Get all MDX files recursively
+export function getAllPosts(): MDXPost[] {
+    const allPosts = Array.from(loadAllPosts().values());
+
+    // Sort posts by date (newest first). Copy already returned by Array.from, so cache order stays intact.
     return allPosts.sort((a, b) => {
         return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
     });
 }
 
 export function getPostBySlug(slug: string): MDXPost | null {
-    if (!fs.existsSync(contentDirectory)) return null;
-
-    const categories = fs.readdirSync(contentDirectory);
-    let foundPost: MDXPost | null = null;
-
-    for (const category of categories) {
-        const categoryPath = path.join(contentDirectory, category);
-        if (fs.statSync(categoryPath).isDirectory()) {
-            const filePath = path.join(categoryPath, `${slug}.mdx`);
-            if (fs.existsSync(filePath)) {
-                const fileContent = fs.readFileSync(filePath, "utf8");
-                const { data, content } = matter(fileContent);
-                const lastModified = fs.statSync(filePath).mtime.toISOString();
-                foundPost = {
-                    slug,
-                    category,
-                    content,
-                    frontmatter: data as MDXPost["frontmatter"],
-                    readingTime: calculateReadingTime(content),
-                    lastModified,
-                };
-                break;
-            }
-        }
-    }
-
-    return foundPost;
+    return loadAllPosts().get(slug) ?? null;
 }
 
 // Get posts by category
