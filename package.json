@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx tsx scripts/fix-mdx-syntax.ts && npx tsx scripts/generate-sitemap.ts && npx tsx scripts/generate-feed.ts && next build --webpack",
+    "build": "node scripts/gen-image-dims.mjs && npx tsx scripts/fix-mdx-syntax.ts && npx tsx scripts/generate-sitemap.ts && npx tsx scripts/generate-feed.ts && next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "blog:detect": "tsx scripts/detect-trends.ts",
@@ -49,6 +49,7 @@
     "autoprefixer": "^10.4.24",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "image-size": "^2.0.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.21.0",
