@@ -138,10 +138,11 @@ export default function RootLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "Organization",
+                "@id": "https://www.wellnesstodays.com/#organization",
                 name: "오늘도 건강",
                 url: "https://www.wellnesstodays.com",
                 logo: "https://www.wellnesstodays.com/icon.svg",
-                description: "간호학·약학·영양학 전공 편집팀이 공공 의료 자료를 기반으로 운영하는 생활건강 정보 사이트",
+                description: "질병관리청·식약처·NIH·WHO 등 1차 출처 공개 자료를 근거로 편집팀이 작성·검수하는 생활건강 정보 사이트",
                 contactPoint: {
                   "@type": "ContactPoint",
                   email: "contact@wellnesstodays.com",
@@ -149,7 +150,8 @@ export default function RootLayout({
                   availableLanguage: "Korean",
                 },
                 sameAs: ["https://www.yakchatja.com"],
-                publishingPrinciples: "https://www.wellnesstodays.com/about#editorial-policy",
+                publishingPrinciples: "https://www.wellnesstodays.com/editorial-policy",
+                correctionsPolicy: "https://www.wellnesstodays.com/editorial-policy",
               },
             ]),
           }}

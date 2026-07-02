@@ -127,14 +127,17 @@ export default async function BlogPost({ params }: PageProps) {
             "@type": "Organization",
             name: "오늘도 건강 편집팀",
             url: "https://www.wellnesstodays.com/about#team",
-            description: "간호학·약학·영양학 전공 편집진",
+            description: "질병관리청·식약처·NIH·WHO 등 1차 출처 공개 자료를 근거로 작성·검수하는 편집팀",
+            parentOrganization: { "@id": "https://www.wellnesstodays.com/#organization" },
         },
         publisher: {
             "@type": "Organization",
+            "@id": "https://www.wellnesstodays.com/#organization",
             name: "오늘도 건강",
             url: "https://www.wellnesstodays.com",
             logo: { "@type": "ImageObject", url: "https://www.wellnesstodays.com/icon.svg" },
         },
+        publishingPrinciples: "https://www.wellnesstodays.com/editorial-policy",
         mainEntityOfPage: {
             "@type": "WebPage",
             "@id": `https://www.wellnesstodays.com/blog/${post.slug}`,

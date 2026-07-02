@@ -27,7 +27,7 @@ function getAllSlugs(): { slug: string; date: string }[] {
     return results;
 }
 
-const staticPages = ["", "/blog", "/about", "/contact", "/privacy", "/terms"];
+const staticPages = ["", "/blog", "/about", "/editorial-policy", "/contact", "/privacy", "/terms"];
 const categories = ["symptoms", "home-remedies", "supplements", "daily-health", "pharmacy-guide"];
 const posts = getAllSlugs();
 const today = new Date().toISOString().split("T")[0];

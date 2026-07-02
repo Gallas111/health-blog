@@ -43,7 +43,8 @@ export default function Footer() {
                         <ul className={styles.linkList}>
                             <li className={styles.linkItem}><Link href="/">홈</Link></li>
                             <li className={styles.linkItem}><Link href="/blog">블로그</Link></li>
-                            <li className={styles.linkItem}><Link href="/about">소개</Link></li>
+                            <li className={styles.linkItem}><Link href="/about">소개·편집팀</Link></li>
+                            <li className={styles.linkItem}><Link href="/editorial-policy">편집·출처 정책</Link></li>
                             <li className={styles.linkItem}><a href="https://www.yakchatja.com" target="_blank" rel="noopener noreferrer">약국찾자</a></li>
                         </ul>
                     </div>
@@ -59,7 +60,7 @@ export default function Footer() {
                         &copy; {new Date().getFullYear()} 오늘도 건강. All rights reserved.
                     </p>
                     <div className={styles.bottomLinks}>
-                        <Link href="/about#editorial-policy">편집 정책</Link>
+                        <Link href="/editorial-policy">편집 정책</Link>
                         <span className={styles.divider}>|</span>
                         <Link href="/privacy">개인정보처리방침</Link>
                         <span className={styles.divider}>|</span>

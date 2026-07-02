@@ -3,8 +3,11 @@ import Link from 'next/link';
 import { ArrowRight, Heart, BookOpen, Shield, FileCheck, RefreshCw, AlertTriangle, Users, GraduationCap, CheckCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: '소개 및 편집 정책 | 오늘도 건강',
+    title: '소개 및 편집 정책',
     description: '오늘도 건강의 편집 원칙, 출처 정책, 업데이트 기준을 안내합니다. 공공 의료 자료 기반의 생활건강 정보 사이트입니다.',
+    alternates: {
+        canonical: 'https://www.wellnesstodays.com/about',
+    },
 };
 
 export default function AboutPage() {
@@ -89,10 +92,19 @@ export default function AboutPage() {
             {/* Team Section - E-E-A-T */}
             <div id="team" className="mb-20 scroll-mt-24">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">편집팀 소개</h2>
-                <p className="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
-                    오늘도 건강은 보건·약학·영양학 분야 전공자들로 구성된 편집팀이 운영합니다.<br />
-                    모든 콘텐츠는 공신력 있는 의료 자료를 기반으로 작성되며, 내부 검수를 거쳐 게시됩니다.
+                <p className="text-center text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto break-keep">
+                    오늘도 건강은 &lsquo;오늘도 건강 편집팀&rsquo;이 운영하는 생활건강 정보 사이트입니다.<br />
+                    모든 콘텐츠는 공신력 있는 1차 출처 자료를 기반으로 작성되며, 내부 검수를 거쳐 게시됩니다.
                 </p>
+
+                <div className="max-w-2xl mx-auto mb-10 p-5 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-200 dark:border-amber-800/30">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed break-keep">
+                        <strong>투명성 고지</strong> — 편집팀은 의사·약사·한의사 등 면허를 보유한 <strong>전문 의료인이 아닙니다.</strong>{' '}
+                        질병관리청·식약처·NIH·WHO 등 <strong>1차 출처 공개 자료를 근거로 정리</strong>하며, 없는 자격이나
+                        임상 경험을 주장하지 않습니다. 자세한 기준은{' '}
+                        <Link href="/editorial-policy" className="text-emerald-600 hover:underline font-medium">편집·출처 정책</Link>에서 확인하세요.
+                    </p>
+                </div>
 
                 <div className="grid md:grid-cols-3 gap-6 mb-10">
                     <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
@@ -100,7 +112,7 @@ export default function AboutPage() {
                             <GraduationCap className="text-emerald-600 dark:text-emerald-400" size={28} />
                         </div>
                         <h3 className="text-lg font-bold mb-1">건강정보 리서처</h3>
-                        <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium mb-3">간호학 전공</p>
+                        <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium mb-3">1차 출처 자료 조사</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                             질병관리청, NIH, PubMed 등 공신력 있는 자료를 조사하고 핵심 정보를 정리합니다.
                         </p>
@@ -111,7 +123,7 @@ export default function AboutPage() {
                             <Users className="text-teal-600 dark:text-teal-400" size={28} />
                         </div>
                         <h3 className="text-lg font-bold mb-1">콘텐츠 에디터</h3>
-                        <p className="text-sm text-teal-600 dark:text-teal-400 font-medium mb-3">약학·영양학 전공</p>
+                        <p className="text-sm text-teal-600 dark:text-teal-400 font-medium mb-3">쉬운 언어 편집</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                             전문 자료를 일반인이 이해할 수 있는 쉬운 언어로 편집하고, 정확성을 검증합니다.
                         </p>
@@ -141,7 +153,7 @@ export default function AboutPage() {
                         <div className="text-center">
                             <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-sm">2</div>
                             <p className="text-sm font-medium">초안 작성</p>
-                            <p className="text-xs text-gray-500 mt-1">전공자 기반 콘텐츠 편집</p>
+                            <p className="text-xs text-gray-500 mt-1">쉬운 언어로 콘텐츠 편집</p>
                         </div>
                         <div className="text-center">
                             <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-sm">3</div>
@@ -159,7 +171,11 @@ export default function AboutPage() {
 
             {/* Editorial Policy Section */}
             <div id="editorial-policy" className="mb-20 scroll-mt-24">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">편집 원칙 및 콘텐츠 정책</h2>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">편집 원칙 및 콘텐츠 정책</h2>
+                <p className="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto break-keep">
+                    사실검증 절차와 수정·정정 기준의 전체 내용은{' '}
+                    <Link href="/editorial-policy" className="text-emerald-600 hover:underline font-medium">편집·출처 정책 페이지</Link>에서 확인할 수 있습니다.
+                </p>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-8">
                     <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
