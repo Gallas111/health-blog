@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
     title: '이용약관 | 오늘도 건강',
     description: '오늘도 건강(wellnesstodays.com) 이용약관',
+    robots: { index: false, follow: true },
 };
 
 export default function TermsPage() {

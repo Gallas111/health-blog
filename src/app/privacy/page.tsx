@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
     title: '개인정보 처리방침 | 오늘도 건강',
     description: '오늘도 건강(wellnesstodays.com) 개인정보 처리방침',
+    robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {
