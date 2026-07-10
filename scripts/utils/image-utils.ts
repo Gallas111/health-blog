@@ -1,10 +1,72 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
+import { imageSize } from 'image-size';
 import { callGemini } from './ai-utils';
 
 dotenv.config();
 dotenv.config({ path: '.env.local' });
+
+// ─── Image validity ─────────────────────────────────────────────────────────
+/** 명백한 쓰레기(빈 응답, 에러 본문)만 거르는 최소 하한. 품질 판정용이 아니다. */
+export const MIN_IMAGE_BYTES = 1024;
+export const MIN_IMAGE_EDGE = 256;
+
+/** 브라우저가 <img>로 확실히 그릴 수 있는 래스터 포맷만 허용한다. SVG는 제외한다. */
+export const RASTER_TYPES = new Set(['png', 'jpg', 'jpeg', 'webp', 'gif']);
+
+/**
+ * 유효한 이미지의 정의: 헤더가 실제 래스터 포맷으로 파싱되고, 두 변이 MIN_IMAGE_EDGE 이상일 것.
+ *
+ * 2026-07-10: 예전 판정은 `buf.length > 15000` 하나뿐이었다. 두 방향으로 틀렸다.
+ *   - 거짓 통과: ai-blog의 cursor-3-composer-2-...-body-2.png 는 이름만 .png 이고 내용은
+ *     18,631바이트짜리 SVG였다. 크기만 보는 판정을 영원히 통과해, image/png 로 서빙되는
+ *     바람에 라이브에서 렌더되지 않는 채로 방치됐다. 그래서 포맷까지 확인한다.
+ *   - 거짓 탈락: PNG를 WebP로 바꾸면 1200x630 썸네일도 12KB 정도로 줄어든다. 바이트 하한이
+ *     15,000이면 멀쩡한 이미지를 깨졌다고 보고 봇이 통째로 재생성한다.
+ * 그래서 크기가 아니라 포맷과 해상도로 판정한다.
+ */
+/**
+ * 파일이 끝까지 다 받아졌는지 확인한다. image-size는 헤더만 읽으므로, 중간에 끊긴 다운로드도
+ * 해상도를 정상 보고한다. 각 포맷의 종료 마커를 직접 확인해야 잘린 파일을 잡을 수 있다.
+ */
+function hasCompleteTrailer(buf: Buffer, type: string): boolean {
+    const t = type.toLowerCase();
+    if (t === 'png') {
+        // IEND 청크가 끝부분에 있어야 한다
+        return buf.subarray(Math.max(0, buf.length - 16)).includes('IEND');
+    }
+    if (t === 'jpg' || t === 'jpeg') {
+        // EOI 마커 FFD9 (뒤에 패딩이 붙는 경우가 있어 마지막 32바이트에서 찾는다)
+        const tail = buf.subarray(Math.max(0, buf.length - 32));
+        for (let i = 0; i < tail.length - 1; i++) {
+            if (tail[i] === 0xff && tail[i + 1] === 0xd9) return true;
+        }
+        return false;
+    }
+    if (t === 'webp') {
+        // RIFF 헤더가 선언한 길이만큼 실제로 존재해야 한다
+        if (buf.length < 12) return false;
+        return buf.readUInt32LE(4) + 8 <= buf.length;
+    }
+    if (t === 'gif') return buf[buf.length - 1] === 0x3b;
+    return true;
+}
+
+export function isValidImage(buf: Buffer): boolean {
+    if (!buf || buf.length < MIN_IMAGE_BYTES) return false;
+    try {
+        const dim = imageSize(buf);
+        if (!dim || !dim.width || !dim.height) return false;
+        const type = (dim.type || '').toLowerCase();
+        if (!RASTER_TYPES.has(type)) return false;
+        if (dim.width < MIN_IMAGE_EDGE || dim.height < MIN_IMAGE_EDGE) return false;
+        return hasCompleteTrailer(buf, type);
+    } catch {
+        return false;
+    }
+}
 
 // ─── Visual element pools for unique prompt generation ──────────────────────
 const VISUAL_SUBJECTS: Record<string, string[]> = {
@@ -528,7 +590,7 @@ async function generateGeminiImage(prompt: string): Promise<Buffer | null> {
         for (const part of parts) {
             if (part.inlineData?.mimeType?.startsWith('image/')) {
                 const buf = Buffer.from(part.inlineData.data, 'base64');
-                if (buf.length > 15000) return buf;
+                if (isValidImage(buf)) return buf;
             }
         }
 
@@ -579,7 +641,7 @@ async function generateGeminiImageAlt(prompt: string, apiKey: string): Promise<B
             for (const part of parts) {
                 if (part.inlineData?.mimeType?.startsWith('image/')) {
                     const buf = Buffer.from(part.inlineData.data, 'base64');
-                    if (buf.length > 15000) {
+                    if (isValidImage(buf)) {
                         console.log(`   ✅ Model ${model} worked!`);
                         return buf;
                     }
@@ -636,7 +698,7 @@ export async function generateHFImageBuffer(prompt: string, retries: number = 3)
                 throw new Error(`HF ${response.status}: ${err.slice(0, 100)}`);
             }
             const buf = Buffer.from(await response.arrayBuffer());
-            return buf.length > 15000 ? buf : null;
+            return isValidImage(buf) ? buf : null;
         } catch (err: any) {
             if (attempt === retries) {
                 console.error(`   ❌ HF FLUX: ${err.message}`);
@@ -723,16 +785,16 @@ async function generatePixazoImage(prompt: string): Promise<Buffer | null> {
             const imgResp = await fetch(data.image_url, { signal: AbortSignal.timeout(30000) });
             if (imgResp.ok) {
                 const buf = Buffer.from(await imgResp.arrayBuffer());
-                if (buf.length > 15000) return buf;
+                if (isValidImage(buf)) return buf;
             }
         } else if (data.image) {
             const buf = Buffer.from(data.image, 'base64');
-            if (buf.length > 15000) return buf;
+            if (isValidImage(buf)) return buf;
         } else if (data.data?.[0]?.url) {
             const imgResp = await fetch(data.data[0].url, { signal: AbortSignal.timeout(30000) });
             if (imgResp.ok) {
                 const buf = Buffer.from(await imgResp.arrayBuffer());
-                if (buf.length > 15000) return buf;
+                if (isValidImage(buf)) return buf;
             }
         }
 
@@ -768,7 +830,7 @@ async function fetchUnsplashImage(keywords: string): Promise<Buffer | null> {
         if (!imgResp.ok) throw new Error(`Unsplash download ${imgResp.status}`);
 
         const buf = Buffer.from(await imgResp.arrayBuffer());
-        return buf.length > 15000 ? buf : null;
+        return isValidImage(buf) ? buf : null;
     } catch (err: any) {
         console.error(`   ❌ Unsplash: ${err.message}`);
         return null;
@@ -804,8 +866,7 @@ export async function generateSmartImage(
 ): Promise<string | null> {
     // Return valid cached image unless force-regenerating
     if (!forceRegen && fs.existsSync(filepath)) {
-        const stat = fs.statSync(filepath);
-        if (stat.size > 15000) return filepath;
+        if (isValidImage(fs.readFileSync(filepath))) return filepath;
     }
 
     const slug = filepath.replace(/\\/g, '/').split('/').pop()?.replace('.png', '') ?? 'image';
@@ -815,10 +876,26 @@ export async function generateSmartImage(
     }
 
     const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
+    // 2026-07-10: 제공자가 준 바이트의 실제 포맷으로 확장자를 맞춘다.
+    // 그 전까지는 무조건 호출자가 정한 .png 로 저장해서, JPEG 바이트가 .png 이름을 달고
+    // image/png 로 서빙됐다(전 블로그 2,300장). 저장 경로를 돌려주므로 호출자가 참조를 맞춘다.
     const save = (buf: Buffer, source: string): string => {
-        fs.writeFileSync(filepath, buf);
-        console.log(`   ✅ [${source}] Saved — ${buf.length.toLocaleString()} bytes → ${filepath}`);
-        return filepath;
+        let target = filepath;
+        try {
+            const detected = (imageSize(buf).type || '').toLowerCase();
+            const norm = detected === 'jpeg' ? 'jpg' : detected;
+            if (norm && RASTER_TYPES.has(norm)) {
+                const current = path.extname(filepath).slice(1).toLowerCase();
+                const currentNorm = current === 'jpeg' ? 'jpg' : current;
+                if (norm !== currentNorm) {
+                    target = filepath.slice(0, -(path.extname(filepath).length)) + '.' + norm;
+                    console.log(`   🔧 실제 포맷이 ${norm} 이라 확장자를 맞춥니다: ${path.basename(target)}`);
+                }
+            }
+        } catch { /* 포맷 판별 실패 시 원래 경로 유지 */ }
+        fs.writeFileSync(target, buf);
+        console.log(`   ✅ [${source}] Saved — ${buf.length.toLocaleString()} bytes → ${target}`);
+        return target;
     };
 
     // Generate a unique, topic-specific prompt
@@ -864,7 +941,7 @@ export async function generateSmartImage(
             const resp = await fetch(url, { signal: AbortSignal.timeout(30000) });
             if (resp.ok) {
                 const buf = Buffer.from(await resp.arrayBuffer());
-                if (buf.length > 15000) return save(buf, 'DALL-E 3');
+                if (isValidImage(buf)) return save(buf, 'DALL-E 3');
             }
         }
     } catch { /* fall through */ }
@@ -899,9 +976,3 @@ export async function generateSmartImage(
 export function getStandardizedPrompt(prompt: string): string {
     return buildLocalPrompt(prompt, 'default');
 }
-
-export const POLLINATIONS_CONFIG = {
-    getURL: (_prompt: string, _seed: number) => {
-        throw new Error('Pollinations has been removed. Use generateSmartImage() instead.');
-    },
-};

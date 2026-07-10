@@ -75,7 +75,7 @@ interface SeoStrategy {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-// 0. Image Generation — delegates to generateSmartImage (Gemini → HF → DALL-E 3 → Pollinations)
+// 0. Image Generation — delegates to generateSmartImage (Gemini → HuggingFace → DALL-E 3 → Pixazo FLUX → Unsplash)
 async function generateThumbnail(title: string, filename: string, category: string, description: string): Promise<string | null> {
     const filepath = path.join(PUBLIC_IMAGE_DIR, filename);
     const result = await generateSmartImage(title, filepath, category, description);

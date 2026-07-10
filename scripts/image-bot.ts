@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import dotenv from 'dotenv';
-import { generateSmartImage, extractSectionContext, SectionContext } from './utils/image-utils';
+import { createHash } from 'node:crypto';
+import { generateSmartImage, extractSectionContext, SectionContext, isValidImage } from './utils/image-utils';
 
 dotenv.config();
 dotenv.config({ path: '.env.local' });
@@ -18,9 +19,8 @@ const generatedImageHashes = new Map<string, string>(); // hash → filepath
 function getFileHash(filepath: string): string {
     if (!fs.existsSync(filepath)) return '';
     const buf = fs.readFileSync(filepath);
-    // Simple hash based on file size + first 1000 bytes
-    const sample = buf.subarray(0, 1000);
-    return `${buf.length}-${Array.from(sample).reduce((a, b) => a + b, 0)}`;
+    // Full-content SHA-256: distinct images never collide, identical images always match.
+    return createHash('sha256').update(buf).digest('hex');
 }
 
 async function generateImage(
@@ -35,7 +35,8 @@ async function generateImage(
     const FORCE_REGEN = process.env.FORCE_REGEN === 'true';
     const SMART_REGEN = process.env.SMART_REGEN === 'true';
     const filepath = path.join(PUBLIC_IMAGE_DIR, filename);
-    const metaPath = filepath.replace('.png', '.meta.json');
+    const metaPathFor = (p: string) => p.slice(0, -(path.extname(p).length)) + '.meta.json';
+    const metaPath = metaPathFor(filepath);
 
     // SMART_REGEN: skip images that already have metadata (already processed by v3 pipeline)
     if (SMART_REGEN && !FORCE_REGEN && fs.existsSync(metaPath)) {
@@ -49,10 +50,12 @@ async function generateImage(
     );
 
     if (result) {
+        // save()가 실제 포맷에 맞춰 확장자를 바꿨을 수 있다. 이후 모든 경로는 실제 저장 경로를 쓴다.
+        const savedPath = result;
         // Check for duplicates
-        const hash = getFileHash(filepath);
+        const hash = getFileHash(savedPath);
         const existingPath = generatedImageHashes.get(hash);
-        if (existingPath && existingPath !== filepath) {
+        if (existingPath && existingPath !== savedPath) {
             console.warn(`   ⚠️ DUPLICATE detected! ${filename} matches ${path.basename(existingPath)}`);
             console.warn(`   🔄 Regenerating with different seed...`);
             const retryResult = await generateSmartImage(
@@ -60,10 +63,16 @@ async function generateImage(
                 imageType, bodyIndex + 10, sectionContext
             );
             if (retryResult) {
-                generatedImageHashes.set(getFileHash(filepath), filepath);
+                // Re-check the regenerated image once; do NOT loop further.
+                const retryHash = getFileHash(retryResult);
+                const stillColliding = generatedImageHashes.get(retryHash);
+                if (stillColliding && stillColliding !== retryResult) {
+                    console.warn(`   ⚠️ STILL DUPLICATE after regeneration! ${path.basename(retryResult)} still matches ${path.basename(stillColliding)}. Leaving as-is (no further retries).`);
+                }
+                generatedImageHashes.set(retryHash, retryResult);
             }
         } else {
-            generatedImageHashes.set(hash, filepath);
+            generatedImageHashes.set(hash, savedPath);
         }
 
         // Save .meta.json for SMART_REGEN tracking
@@ -74,10 +83,11 @@ async function generateImage(
             sectionHeading: sectionContext?.sectionHeading || '',
             keyTopics: sectionContext?.sectionKeyTopics || [],
         };
-        fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2));
+        fs.writeFileSync(metaPathFor(savedPath), JSON.stringify(meta, null, 2));
     }
 
-    return result ? `/images/posts/${filename}` : null;
+    // save()가 확장자를 바꿨을 수 있으므로 실제 저장된 파일명으로 참조를 만든다.
+    return result ? `/images/posts/${path.basename(result)}` : null;
 }
 
 async function processFile(filePath: string) {
@@ -108,9 +118,9 @@ async function processFile(filePath: string) {
             console.log(`🔄 FORCE_REGEN active. Regenerating thumbnail: ${data.image}`);
             shouldGenerateThumb = true;
         } else {
-            const stats = fs.statSync(thumbLocalPath);
-            if (stats.size < 15000) {
-                console.log(`⚠️ Found invalid existing thumbnail ${data.image} (${stats.size}b). Will regenerate.`);
+            const buf = fs.readFileSync(thumbLocalPath);
+            if (!isValidImage(buf)) {
+                console.log(`⚠️ Found invalid existing thumbnail ${data.image} (${buf.length}b). Will regenerate.`);
                 shouldGenerateThumb = true;
             }
         }
@@ -140,7 +150,8 @@ async function processFile(filePath: string) {
 
     for (let i = 0; i < matches.length; i++) {
         const description = matches[i][1];
-        const filename = `${slug}-bot-body-${i + 1}.png`;
+        // Naming convention: {slug}-body-{n}.png (legacy {slug}-bot-body-{n}.png files still resolve via the '-body-' classifier below)
+        const filename = `${slug}-body-${i + 1}.png`;
 
         // Extract section context for this image position
         const matchIndex = matches[i].index ?? 0;
@@ -156,9 +167,9 @@ async function processFile(filePath: string) {
             console.log(`🔄 FORCE_REGEN active. Regenerating body image: ${filename}`);
             shouldGenerate = true;
         } else {
-            const stats = fs.statSync(localPath);
-            if (stats.size < 15000) {
-                console.log(`⚠️ Found invalid existing body file ${filename} (${stats.size}b). Will regenerate.`);
+            const buf = fs.readFileSync(localPath);
+            if (!isValidImage(buf)) {
+                console.log(`⚠️ Found invalid existing body file ${filename} (${buf.length}b). Will regenerate.`);
                 shouldGenerate = true;
             }
         }
@@ -205,9 +216,9 @@ async function processFile(filePath: string) {
             console.log(`🔄 FORCE_REGEN active. Regenerating link image: ${publicPath}`);
             shouldGenerate = true;
         } else {
-            const stats = fs.statSync(localPath);
-            if (stats.size < 15000) {
-                console.log(`⚠️ Found invalid linked image file ${publicPath} (${stats.size}b). Will regenerate.`);
+            const buf = fs.readFileSync(localPath);
+            if (!isValidImage(buf)) {
+                console.log(`⚠️ Found invalid linked image file ${publicPath} (${buf.length}b). Will regenerate.`);
                 shouldGenerate = true;
             }
         }
@@ -224,7 +235,7 @@ async function processFile(filePath: string) {
                 linkSectionCtx = extractSectionContext(newContent, match.index, match[0]);
             }
 
-            await generateImage(
+            const regenPath = await generateImage(
                 alt || data.title,
                 filename,
                 data.category || 'default',
@@ -233,6 +244,12 @@ async function processFile(filePath: string) {
                 bodyIdx,
                 linkSectionCtx
             );
+            // save()가 실제 포맷에 맞춰 확장자를 바꿨을 수 있다. 그러면 본문 링크도 따라가야 한다.
+            if (regenPath && regenPath !== `/${publicPath}`) {
+                console.log(`   🔗 본문 링크 갱신: ${publicPath} → ${regenPath.slice(1)}`);
+                newContent = newContent.replace(match[0], `![${alt}](${regenPath})`);
+                modified = true;
+            }
             await delay(3000);
         }
     }
