@@ -251,10 +251,10 @@ export default function EditorialPolicyPage() {
                         확인 후 이 정책에 따라 처리합니다.
                     </p>
                     <a
-                        href="mailto:contact@wellnesstodays.com"
+                        href="mailto:btccharr@gmail.com"
                         className="text-emerald-600 hover:underline font-medium"
                     >
-                        contact@wellnesstodays.com
+                        btccharr@gmail.com
                     </a>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
                         또는 <Link href="/contact" className="text-emerald-600 hover:underline">문의 페이지</Link>를 이용하세요.

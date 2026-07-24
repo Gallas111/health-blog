@@ -145,7 +145,7 @@ export default function RootLayout({
                 description: "질병관리청·식약처·NIH·WHO 등 1차 출처 공개 자료를 근거로 편집팀이 작성·검수하는 생활건강 정보 사이트",
                 contactPoint: {
                   "@type": "ContactPoint",
-                  email: "contact@wellnesstodays.com",
+                  email: "btccharr@gmail.com",
                   contactType: "customer service",
                   availableLanguage: "Korean",
                 },

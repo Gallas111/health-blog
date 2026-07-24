@@ -19,7 +19,7 @@ export default function Footer() {
                             <a href="https://www.yakchatja.com" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="약국찾자">
                                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                             </a>
-                            <a href="mailto:contact@wellnesstodays.com" className={styles.socialLink} aria-label="Email">
+                            <a href="mailto:btccharr@gmail.com" className={styles.socialLink} aria-label="Email">
                                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
                             </a>
                         </div>

@@ -240,7 +240,7 @@ export default function AboutPage() {
 
                 <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5 text-center">
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                        오류 제보, 내용 정정 요청, 기타 문의는 <a href="mailto:contact@wellnesstodays.com" className="text-emerald-600 hover:underline font-medium">contact@wellnesstodays.com</a>으로 보내주세요.
+                        오류 제보, 내용 정정 요청, 기타 문의는 <a href="mailto:btccharr@gmail.com" className="text-emerald-600 hover:underline font-medium">btccharr@gmail.com</a>으로 보내주세요.
                     </p>
                 </div>
             </div>

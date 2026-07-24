@@ -25,8 +25,8 @@ export default function ContactPage() {
                     <p className="text-gray-500 dark:text-gray-400 mb-4">
                         일반 문의 및 제휴
                     </p>
-                    <a href="mailto:contact@wellnesstodays.com" className="text-emerald-600 dark:text-emerald-400 font-medium hover:underline">
-                        contact@wellnesstodays.com
+                    <a href="mailto:btccharr@gmail.com" className="text-emerald-600 dark:text-emerald-400 font-medium hover:underline">
+                        btccharr@gmail.com
                     </a>
                 </div>
 
