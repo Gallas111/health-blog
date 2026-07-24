@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     return {
         title: fullTitle,
-        description: `${categoryInfo.description} 의료 전문가 검수 ${posts.length}개 글, 매주 업데이트.`,
+        description: `${categoryInfo.description} ${posts.length}개 글, 매주 업데이트.`,
         keywords: [categoryInfo.title, ...categoryInfo.features, "건강정보", "오늘도 건강"],
         robots: posts.length < 5
             ? { index: false, follow: true }
